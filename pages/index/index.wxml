@@ -1,13 +1,42 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<!-- tabbar页面开始 -->
+<home wx:if="{{PageCur=='home'}}"></home>
+<apps wx:if="{{PageCur=='apps'}}"></apps>
+<!-- <plugin wx:if="{{PageCur=='plugin'}}"></plugin> -->
+<!-- <plugin wx:if="{{PageCur=='plugin'}}"></plugin> -->
+<mine wx:if="{{PageCur=='mine'}}"></mine>
+<!-- tabbar页面结束 -->
+
+<!-- 底部导航栏开始 -->
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="home">
+    <view class='cuIcon-cu-image'>
+      <image src="/static/images/tabbar/home{{PageCur=='home'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='home'?'text-blue':'text-gray'}}">首页</view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <view class="action" bindtap="NavChange" data-cur="apps">
+    <view class='cuIcon-cu-image'>
+      <image src="/static/images/tabbar/apps{{PageCur=='apps'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='apps'?'text-blue':'text-gray'}}">应用</view>
+  </view>
+  <!-- <view class="action" bindtap="NavChange" data-cur="plugin">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/plugin{{PageCur=='plugin'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='plugin'?'text-green':'text-gray'}}">发现</view>
+  </view> -->
+  <!-- <view class="action" bindtap="NavChange" data-cur="about">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/about{{PageCur=='about'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='about'?'text-green':'text-gray'}}">消息</view>
+  </view> -->
+  <view class="action" bindtap="NavChange" data-cur="mine">
+    <view class='cuIcon-cu-image'>
+      <image src="/static/images/tabbar/mine{{PageCur=='mine'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='mine'?'text-blue':'text-gray'}}">我的</view>
   </view>
 </view>
+<!-- 底部导航栏结束 -->
