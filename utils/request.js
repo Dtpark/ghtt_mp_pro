@@ -1,5 +1,5 @@
 import cookies from '../vendor/weapp-cookie/dist/weapp-cookie'
-const host = require('/../config').host
+const host = require('../config/config').host
 
 class request {
   constructor() {

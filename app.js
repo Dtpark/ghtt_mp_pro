@@ -1,12 +1,20 @@
 //app.js
 import wxAPIManager from './utils/api.js'
 import apimanager from './utils/apiManager.js'
-// const api = require('./config/config').checkUrl
+const checkUrl = require('/config/config.js').checkUrl
 App({
   onLaunch: function () {
     let that = this;
+    // 获取自定义状态栏高度
     that.customBarHeight()
-    console.log(api)
+    // 获取Dz信息
+    that.checkUrlDz()
+      .then(res => {
+        that.globalData.regname = res.regname
+        that.globalData.repliesrank = res.setting.repliesrank
+        that.globalData.allowpostcomment = res.setting.allowpostcomment
+      })
+    console.log(that.globalData.regname)
   },
 
   /**
@@ -23,6 +31,23 @@ App({
     that.globalData.Custom = custom
     // 计算顶部导航栏高度
     that.globalData.CustomBar = custom.bottom + custom.top - systemInfo.statusBarHeight
+
+  },
+
+  /**
+   * 访问DZ checkurl
+   */
+  checkUrlDz() {
+    let that = this
+    return new Promise((resolve, rejects) => {
+      that.apimanager.getRequest(checkUrl)
+        .then(res => {
+          // console.log(res)
+          resolve(res)
+        }, err => {
+          rejects(err)
+        })
+    })
 
   },
 
@@ -49,12 +74,12 @@ App({
     // ？？？用户等级？？？
     repliesrank: '',
     // 允许评论？？？
-    allowpostcomment: []
+    allowpostcomment: {}
 
   },
   // 实例化封装的 API
-  wxApi: new wxAPIManager,
+  wxApi: new wxAPIManager(),
   // 实例化 封装的 request API
-  apimanager: new apimanager
+  apimanager: new apimanager()
 
 })

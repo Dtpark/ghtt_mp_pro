@@ -1,9 +1,9 @@
 import request from './request.js'
-const seccodeUrl = require('/../config').seccodeUrl
-const codeImageUrl = require('/../config').codeImageUrl
-const host = require('/../config').host
+const seccodeUrl = require('../config/config').seccodeUrl
+const codeImageUrl = require('../config/config').codeImageUrl
+// const host = require('../config/config').host
 
-class apimanager {
+class apiManager {
   constructor() {
     this._defaultHeader = { 
       'Content-Type': 'application/json',
@@ -85,4 +85,4 @@ class apimanager {
     })
   }
 }
-export default apimanager
+export default apiManager

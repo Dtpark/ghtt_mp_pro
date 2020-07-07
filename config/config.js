@@ -102,4 +102,4 @@ const config = {
 	userInfoUrl: `${apiUrl}v1/user`
 }
 
-export default config
+module.exports = config
