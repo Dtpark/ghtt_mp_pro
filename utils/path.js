@@ -7,4 +7,4 @@ const loginPath = '/pages/mine/login/home'
 const path = {
     loginPath
 }
-module.exports = path
+export default path

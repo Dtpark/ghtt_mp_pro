@@ -1,7 +1,7 @@
 // pages/mine/home/home.js
 const app = getApp()
-const loginPath = require('../../../utils/path').loginPath
-// const loginPath = 
+const loginPath = require('../../../utils/path').default.loginPath
+// cosnt
 Page({
 
   /**
@@ -71,6 +71,6 @@ Page({
    * 跳转到登录页面
    */
   toLogin(){
-    app.apiManager.navigateTo(loginPath)
+    app.wxApi.navigateTo(loginPath)
   }
 })

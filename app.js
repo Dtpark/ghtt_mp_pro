@@ -1,9 +1,12 @@
 //app.js
-import APIManager from './utils/api.js'
+import wxAPIManager from './utils/api.js'
+import apimanager from './utils/apiManager.js'
+// const api = require('./config/config').checkUrl
 App({
   onLaunch: function () {
     let that = this;
     that.customBarHeight()
+    console.log(api)
   },
 
   /**
@@ -12,14 +15,14 @@ App({
   customBarHeight() {
     let that = this
     // 获取设备信息
-      let systemInfo = that.apiManager.getSystemInfoSync()
-      // 获取状态栏高度
-      that.globalData.StatusBar = systemInfo.statusBarHeight
-      // 获取胶囊位置信息
-      let custom = that.apiManager.getMenuButtonBoundingClientRect()
-      that.globalData.Custom = custom
-      // 计算顶部导航栏高度
-      that.globalData.CustomBar = custom.bottom + custom.top - systemInfo.statusBarHeight
+    let systemInfo = that.wxApi.getSystemInfoSync()
+    // 获取状态栏高度
+    that.globalData.StatusBar = systemInfo.statusBarHeight
+    // 获取胶囊位置信息
+    let custom = that.wxApi.getMenuButtonBoundingClientRect()
+    that.globalData.Custom = custom
+    // 计算顶部导航栏高度
+    that.globalData.CustomBar = custom.bottom + custom.top - systemInfo.statusBarHeight
 
   },
 
@@ -39,9 +42,19 @@ App({
     // 胶囊按钮的布局位置信息
     Custom: {},
     // 顶部导航栏高度
-    CustomBar: 0
+    CustomBar: 0,
+
+    // check获得的
+    regname: '',
+    // ？？？用户等级？？？
+    repliesrank: '',
+    // 允许评论？？？
+    allowpostcomment: []
 
   },
   // 实例化封装的 API
-  apiManager: new APIManager()
+  wxApi: new wxAPIManager,
+  // 实例化 封装的 request API
+  apimanager: new apimanager
+
 })

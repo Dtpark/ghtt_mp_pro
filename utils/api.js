@@ -5,7 +5,7 @@
  */
 
 
-class APIManager {
+class wxAPIManager {
 
     // 获取设备信息（同步）
     getSystemInfoSync(){
@@ -50,4 +50,4 @@ class APIManager {
 
 }
 
-export default APIManager
+export default wxAPIManager
