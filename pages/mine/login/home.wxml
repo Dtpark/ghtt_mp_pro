@@ -1,2 +1,39 @@
-<!--pages/mine/login/home.wxml-->
-<text>pages/mine/login/home.wxml</text>
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+    <!-- <view slot="backText">返回</view> -->
+    <view slot="content">登录</view>
+</cu-custom>
+<!-- logo开始 -->
+<view class="logo-box">
+    <image class="logo" src="/static/images/logo.png"></image>
+</view>
+<!-- logo结束 -->
+
+<form>
+    <view class="cu-form-group">
+        <view class="title">用户名</view>
+        <input placeholder="请输入用户名" name="username"></input>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">密码</view>
+        <input placeholder="请输入密码" name="password" :type="pwdType"></input>
+        <view class="cu-capsule">
+            <text class="lg text-gray cuIcon-attentionforbid"></text>
+        </view>
+    </view>
+    <view v-if="sechash" class="cu-form-group">
+        <view class="title">验证码</view>
+        <input placeholder="请输入验证码" name="seccodeverify"></input>
+        <view class="cu-avatar radius">
+            <image :src="imageSrc"></image>
+        </view>
+    </view>
+
+    <view class="padding">
+        <button class="cu-btn block bg-green margin-tb-sm lg" form-type="submit">登录</button>
+        <button class="cu-btn block bg-white margin-tb-sm lg">注册</button>
+        <view class="flex justify-end margin-tb-sm text-gray ">
+            <text>忘记密码？</text>
+        </view>
+    </view>
+</form>
+<!-- 表单结束 -->

@@ -3,18 +3,7 @@ import APIManager from './utils/api.js'
 App({
   onLaunch: function () {
     let that = this;
-    // that.printData('=====>000')
     that.customBarHeight()
-    // that.printData('========>111')
-    // wx.getSystemInfo({
-    //   success: e => {
-    //     this.globalData.StatusBar = e.statusBarHeight;
-    //     let custom = wx.getMenuButtonBoundingClientRect();
-    //     this.globalData.Custom = custom;
-    //     this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
-    //   }
-    // })
-    // that.printData('=======>222')
   },
 
   /**
@@ -23,7 +12,6 @@ App({
   customBarHeight() {
     let that = this
     // 获取设备信息
-    // try {
       let systemInfo = that.apiManager.getSystemInfoSync()
       // 获取状态栏高度
       that.globalData.StatusBar = systemInfo.statusBarHeight
@@ -32,10 +20,6 @@ App({
       that.globalData.Custom = custom
       // 计算顶部导航栏高度
       that.globalData.CustomBar = custom.bottom + custom.top - systemInfo.statusBarHeight
-
-    // } catch (e) {
-
-    // }
 
   },
 

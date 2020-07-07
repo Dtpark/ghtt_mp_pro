@@ -1,4 +1,7 @@
 // pages/mine/home/home.js
+const app = getApp()
+const loginPath = require('../../../utils/path').loginPath
+// const loginPath = 
 Page({
 
   /**
@@ -62,5 +65,12 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 跳转到登录页面
+   */
+  toLogin(){
+    app.apiManager.navigateTo(loginPath)
   }
 })

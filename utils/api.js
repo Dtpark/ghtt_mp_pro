@@ -12,7 +12,6 @@ class APIManager {
         return wx.getSystemInfoSync()
     }
 
-
     // 获取菜单按钮（右上角胶囊按钮）的布局位置信息
     // 坐标信息以屏幕左上角为原点
     getMenuButtonBoundingClientRect() {
@@ -23,6 +22,12 @@ class APIManager {
     onThemeChange(){
         return wx.onThemeChange()
     }
+
+    // 页面跳转
+    navigateTo(url = ''){
+        return wx.navigateTo({ url: url})
+    }
+    
 
 
     //promise化接口

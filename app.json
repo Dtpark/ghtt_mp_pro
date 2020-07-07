@@ -1,13 +1,14 @@
 {
   "pages": [
     
-    "pages/mine/login/home",
+    
 
     "pages/index/index",
     "pages/logs/logs",
     "pages/home/home/home",
     "pages/apps/home/home",
-    "pages/mine/home/home"
+    "pages/mine/home/home",
+    "pages/mine/login/home"
   ],
   "window": {
     "navigationBarTitleText": "WeChat",
@@ -19,7 +20,6 @@
     "backgroundColorBottom": "@bgColorBottom",
     "navigationStyle": "custom"
   },
-  "style": "v2",
   "darkmode": true,
   "themeLocation": "theme.json",
   "sitemapLocation": "sitemap.json",
