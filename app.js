@@ -7,6 +7,10 @@ App({
     let that = this;
     // 获取自定义状态栏高度
     that.customBarHeight()
+
+    // 获取本地登录态信息
+    that.getStatus()
+    
     // 获取Dz信息
     that.checkUrlDz()
       .then(res => {
@@ -14,7 +18,6 @@ App({
         that.globalData.repliesrank = res.setting.repliesrank
         that.globalData.allowpostcomment = res.setting.allowpostcomment
       })
-    console.log(that.globalData.regname)
   },
 
   /**
@@ -51,6 +54,42 @@ App({
 
   },
 
+  /**
+   * 获取 uid && token
+   */
+  getStatus(){
+    let that = this
+    // 获取uid
+    if(that.globalData.uid == ''){
+      try {
+        let uid = that.wxApi.getStorageSync('uid')
+        if (uid) {
+          // uid存在
+          that.globalData.uid = uid
+        }
+      } catch (e) {
+        // Do something when catch error
+        console.log(e)
+      }
+    }
+
+
+    // 获取token
+    if(that.globalData.token == ''){
+      try {
+        let token = that.wxApi.getStorageSync('token')
+        if (token) {
+          // token存在
+          that.globalData.token = token
+        }
+      } catch (e) {
+        // Do something when catch error
+        console.log(e)
+      }
+    }
+
+  },
+
   //打印数据
   printData(params) {
     let that = this;
@@ -74,7 +113,12 @@ App({
     // ？？？用户等级？？？
     repliesrank: '',
     // 允许评论？？？
-    allowpostcomment: {}
+    allowpostcomment: {},
+
+    // 用户id（用户判断登录态）
+    uid: '',
+    // api 的token（同uid一起联合判断登录态）
+    token: ''
 
   },
   // 实例化封装的 API

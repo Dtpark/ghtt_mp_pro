@@ -8,7 +8,7 @@
 class wxAPIManager {
 
     // 获取设备信息（同步）
-    getSystemInfoSync(){
+    getSystemInfoSync() {
         return wx.getSystemInfoSync()
     }
 
@@ -19,16 +19,37 @@ class wxAPIManager {
     }
 
     // 监听主题切换事件
-    onThemeChange(){
+    onThemeChange() {
         return wx.onThemeChange()
     }
 
     // 页面跳转
-    navigateTo(url = ''){
-        return wx.navigateTo({ url: url})
+    navigateTo(url = '') {
+        return wx.navigateTo({ url: url })
     }
-    
 
+    // 同步获取storage信息
+    getStorageSync(params = '') {
+        return wx.getStorageSync(params)
+    }
+
+    // 同步删除storage信息
+    removeStorageSync(params = ''){
+        return wx.removeStorageSync({ key: params })
+    }
+
+    // 显示Toast弹窗
+    // showToast(title = '', icon = 'success', duration = '2000', mask = true, params = {}){
+    //     return wx.showToast({
+    //       title: title, //提示的内容,
+    //       icon: icon, //图标,
+    //       duration: duration, //延迟时间,
+    //       mask: mask, //显示透明蒙层，防止触摸穿透,
+    //       success: res => {
+    //           ...params
+    //       }
+    //     });
+    // }
 
     //promise化接口
     promisify(functionName, params) {
@@ -44,6 +65,11 @@ class wxAPIManager {
     // 获取设备信息(异步)
     getSystemInfo(params = {}) {
         return this.promisify('getSystemInfo', params)
+    }
+
+    // 显示弹窗
+    showToast(params = { title: '', icon: 'success', duration: '2000', mask: true }) {
+        return this.promisify('showToast', params)
     }
 
 
