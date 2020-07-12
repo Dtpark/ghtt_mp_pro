@@ -19,6 +19,31 @@ Component({
   lifetimes: {
     attached: function () {
       // 在组件实例进入页面节点树时执行
+      let that = this
+      // 判断登录态
+      let uid = app.globalData.uid
+      let token = app.globalData.token
+      if (!uid || !token) {
+        // 本地没有登录信息
+        that.setData({
+          avatar: userAvatar,
+          username: '',
+          uid: '',
+          threads: '-',
+          posts: '-',
+          credits: '-',
+          field4: '',
+          grouptitle: ''
+        })
+      } else {
+        // 本地存在登录信息
+        // 设置用户id
+        that.setData({
+          uid: uid
+        })
+        // 获取dz的用户信息
+        that.requestProfile()
+      }
       
     },
     detached: function () {

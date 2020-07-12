@@ -20,9 +20,9 @@ function loginOut() {
 
 function loginSetUserInfo(obj) {
   wx.setStorageSync('uid', obj.Variables.member_uid)
-  getApp().globalData.uid = obj.Variables.member_uid
-  getApp().globalData.avatar = obj.Variables.member_avatar
-  getApp().globalData.username = obj.Variables.member_username
+  app.globalData.uid = obj.Variables.member_uid
+  app.globalData.avatar = obj.Variables.member_avatar
+  app.globalData.username = obj.Variables.member_username
 }
 
 function isLogin() {
