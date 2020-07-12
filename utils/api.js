@@ -33,23 +33,31 @@ class wxAPIManager {
         return wx.getStorageSync(params)
     }
 
+    // 同步设置storage信息
+    setStorageSync(key = null, value = null){
+        return wx.setStorageSync(key,value)
+    }
+
     // 同步删除storage信息
     removeStorageSync(params = ''){
         return wx.removeStorageSync({ key: params })
     }
 
-    // 显示Toast弹窗
-    // showToast(title = '', icon = 'success', duration = '2000', mask = true, params = {}){
-    //     return wx.showToast({
-    //       title: title, //提示的内容,
-    //       icon: icon, //图标,
-    //       duration: duration, //延迟时间,
-    //       mask: mask, //显示透明蒙层，防止触摸穿透,
-    //       success: res => {
-    //           ...params
-    //       }
-    //     });
-    // }
+    // 关闭当前页面并返回之前的页面
+    navigateBack(delta = 1){
+        return wx.navigateBack({
+          delta: delta //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+        })
+    }
+
+    // 隐藏loading弹窗
+    hideLoading(){
+        return wx.hideLoading()
+    }
+    
+
+
+
 
     //promise化接口
     promisify(functionName, params) {
@@ -67,9 +75,14 @@ class wxAPIManager {
         return this.promisify('getSystemInfo', params)
     }
 
-    // 显示弹窗
+    // 显示Toast弹窗
     showToast(params = { title: '', icon: 'success', duration: '2000', mask: true }) {
         return this.promisify('showToast', params)
+    }
+
+    // 显示Loading弹窗
+    showLoading(params = { title: 'Loading', mask: true }){
+        return this.promisify('showLoading', params)
     }
 
 

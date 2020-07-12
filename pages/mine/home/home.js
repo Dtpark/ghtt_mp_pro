@@ -19,6 +19,19 @@ Component({
   lifetimes: {
     attached: function () {
       // 在组件实例进入页面节点树时执行
+      
+    },
+    detached: function () {
+      // 在组件实例被从页面节点树移除时执行
+    }
+  },
+
+  /**
+   * 组件所在页面的生命周期
+   */
+  pageLifetimes: {
+    show: function() {
+      // 页面被展示
       let that = this
       // 判断登录态
       let uid = app.globalData.uid
@@ -45,9 +58,6 @@ Component({
         that.requestProfile()
       }
     },
-    detached: function () {
-      // 在组件实例被从页面节点树移除时执行
-    }
   },
 
   /**

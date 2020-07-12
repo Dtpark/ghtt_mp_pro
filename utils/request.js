@@ -98,9 +98,9 @@ class request {
             if (typeof res.data.Variables != "undefined" && res.data.Variables && res.data.Variables.member_uid==0){
               if (getApp().globalData.uid) {
                 //如果member_uid为空则重新执行下登录
-                getApp().relogin();
+                // getApp().relogin();
               } else if (res.data.Message != "undefined" && res.data.Message && res.data.Message.messageval.indexOf('to_login') != -1) {
-                getApp().relogin();
+                // getApp().relogin();
               }
             }
             if (typeof res.data.Variables != "undefined" && res.data.Variables) {

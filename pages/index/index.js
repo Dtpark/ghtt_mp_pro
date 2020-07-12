@@ -1,8 +1,8 @@
-const app = getApp()
+// const app = getApp()
 Page({
   data: {
     // 当前页面
-    PageCur: 'home'
+    PageCur: 'mine'
   },
   NavChange(e) {
     this.setData({

@@ -1,4 +1,4 @@
-<cu-custom bgColor="bg-white" isBack="{{true}}">
+<cu-custom bgColor="bg-white" isBack="true">
     <!-- <view slot="backText">返回</view> -->
     <view slot="content">登录</view>
 </cu-custom>
@@ -8,7 +8,7 @@
 </view>
 <!-- logo结束 -->
 
-<form>
+<form catchsubmit="login">
     <view class="cu-form-group">
         <view class="title">用户名</view>
         <input placeholder="请输入用户名" name="username"></input>
@@ -20,11 +20,11 @@
             <text class="lg text-gray cuIcon-attentionforbid"></text>
         </view>
     </view>
-    <view v-if="sechash" class="cu-form-group">
+    <view wx:if="{{sechash}}" class="cu-form-group">
         <view class="title">验证码</view>
         <input placeholder="请输入验证码" name="seccodeverify"></input>
-        <view class="cu-avatar radius">
-            <image :src="imageSrc"></image>
+        <view class="cu-avatar radius" bindtap="downSeccode">
+            <image src="{{imageSrc}}"></image>
         </view>
     </view>
 

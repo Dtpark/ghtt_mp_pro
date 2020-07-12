@@ -98,7 +98,7 @@ const config = {
 	deleteSelfPostUrl: `${dzApiUrl}module=deleteselfpost&version=5`,
 	commentMoreUrl: `${dzApiUrl}module=viewcomment&version=5`,
 	
-	tokenUrl: `${apiUrl}v1/token`,
+	tokenUrl: `${apiUrl}v1/open/token`,
 	userInfoUrl: `${apiUrl}v1/user`
 }
 

@@ -4,7 +4,6 @@
     "pages/logs/logs",
     "pages/home/home/home",
     "pages/apps/home/home",
-    "pages/mine/home/home",
     "pages/mine/login/home"
   ],
   "window": {

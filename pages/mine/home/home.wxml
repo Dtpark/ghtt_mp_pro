@@ -1,7 +1,29 @@
 <cu-custom bgColor="bg-white">
 </cu-custom>
-<!-- 登录/个人信息 开始 -->
-<view class="cu-list menu-avatar" bindtap="toLogin">
+
+<!-- 个人信息 开始 -->
+<view wx:if="{{ uid }}" class="cu-list menu-avatar" bindtap="">
+    <view class="cu-item">
+        <view class="cu-avatar round lg"
+            style="background-image:url('{{ avatar }}');"></view>
+        <view class="content">
+            <view class="text-black text-lg">
+                <text class="text-cut">{{username}}</text>
+                <!-- <view class="cu-tag round bg-orange sm">断开连接...</view> -->
+            </view>
+            <view class="text-gray text-sm flex">
+                <text class="text-cut"> uid:{{uid}}</text>
+            </view>
+        </view>
+        <view class="action">
+            <!-- <text class="cuIcon-right lg text-gray"></text> -->
+        </view>
+    </view>
+</view>
+<!-- 个人信息 结束 -->
+
+<!-- 登录 开始 -->
+<view wx:else class="cu-list menu-avatar" bindtap="toLogin">
     <view class="cu-item">
         <view class="cu-avatar round lg"
             style="background-image:url('{{ avatar }}');"></view>
@@ -19,7 +41,7 @@
         </view>
     </view>
 </view>
-<!-- 登录/个人信息 结束 -->
+<!-- 登录 结束 -->
 
 <!-- 主题、回复、积分 开始 -->
 <view class="padding flex text-center text-grey cu-bar bg-white">
