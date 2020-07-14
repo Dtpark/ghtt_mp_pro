@@ -3,10 +3,11 @@ const app = getApp()
 
 function loginOut() {
   let uid = app.globalData.uid
+  console.log(uid)
   if (uid) {
     app.globalData.uid = ''
     // app.globalData.avatar = ''
-    app.globalData.username = ''
+    // app.globalData.username = ''
     app.globalData.token = ''
     app.wxApi.removeStorageSync('uid')
     app.wxApi.removeStorageSync('token')

@@ -103,10 +103,10 @@ Page({
     let dzRes = null
     // 前台校验数据
     if (e.detail.value.username == '' || e.detail.value.password == '') {
-      // uni.showModal({
-      //   content: '输入不能为空！',
-      //   showCancel: false
-      // })
+      app.wxApi.showModal({
+        content: '输入不能为空！',
+        showCancel: false
+      })
       return false
     }
     // 组合数据
@@ -158,7 +158,7 @@ Page({
 
       }, err => {
         console.log(err)
-        // 获取token失败 或登录失败
+        // 获取token失败 或  登录失败
         // 提示错误
         if (err.data.msg != undefined) {
           // 获取token失败

@@ -65,7 +65,7 @@
 
 <!-- 列表项开始 -->
 <view class="cu-list menu sm-border margin-top-sm">
-    <view class="cu-item arrow">
+    <view class="cu-item arrow" bindtap="toSetting">
         <view class="content">
             <text class="cuIcon-settings text-black"></text>
             <text class="text-black">设置</text>

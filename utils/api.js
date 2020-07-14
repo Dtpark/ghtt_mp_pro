@@ -34,27 +34,27 @@ class wxAPIManager {
     }
 
     // 同步设置storage信息
-    setStorageSync(key = null, value = null){
-        return wx.setStorageSync(key,value)
+    setStorageSync(key = null, value = null) {
+        return wx.setStorageSync(key, value)
     }
 
     // 同步删除storage信息
-    removeStorageSync(params = ''){
-        return wx.removeStorageSync({ key: params })
+    removeStorageSync(params = '') {
+        return wx.removeStorageSync(params)
     }
 
     // 关闭当前页面并返回之前的页面
-    navigateBack(delta = 1){
+    navigateBack(delta = 1) {
         return wx.navigateBack({
-          delta: delta //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+            delta: delta //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
         })
     }
 
     // 隐藏loading弹窗
-    hideLoading(){
+    hideLoading() {
         return wx.hideLoading()
     }
-    
+
 
 
 
@@ -81,8 +81,13 @@ class wxAPIManager {
     }
 
     // 显示Loading弹窗
-    showLoading(params = { title: 'Loading', mask: true }){
+    showLoading(params = { title: 'Loading', mask: true }) {
         return this.promisify('showLoading', params)
+    }
+
+    // 显示模态框
+    showModal(params = { title: '提示', content: '', showCancel: true, cancelText: '取消', cancelColor: '#000', confimText:'确认', confirmColor: '#3CC51F'}) {
+        return this.promisify('showModal', params)
     }
 
 

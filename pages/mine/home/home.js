@@ -1,6 +1,7 @@
 const app = getApp()
 const profileUrl = require('../../../config/config').profileUrl
 const loginPath = require('../../../utils/path').default.loginPath
+const settingPath = require('../../../utils/path').default.settingPath
 const userAvatar = require('../../../config/config').userAvatar
 Component({
   options: {
@@ -23,7 +24,7 @@ Component({
       // 判断登录态
       let uid = app.globalData.uid
       let token = app.globalData.token
-      if (!uid || !token) {
+      if (uid == '' || token == '') {
         // 本地没有登录信息
         that.setData({
           avatar: userAvatar,
@@ -61,7 +62,7 @@ Component({
       // 判断登录态
       let uid = app.globalData.uid
       let token = app.globalData.token
-      if (!uid || !token) {
+      if (uid == '' || token == '') {
         // 本地没有登录信息
         that.setData({
           avatar: userAvatar,
@@ -114,6 +115,10 @@ Component({
     // 跳转到登录页面
     toLogin() {
       app.wxApi.navigateTo(loginPath)
+    },
+    // 跳转到设置页
+    toSetting(){
+      app.wxApi.navigateTo(settingPath)
     },
 
     // 获取用户信息（discuz）

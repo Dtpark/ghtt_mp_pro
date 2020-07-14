@@ -107,6 +107,8 @@ App({
     Custom: {},
     // 顶部导航栏高度
     CustomBar: 0,
+    // 持续时间
+    duration:2000,
 
     // check获得的
     regname: '',

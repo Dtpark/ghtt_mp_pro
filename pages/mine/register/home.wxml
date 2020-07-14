@@ -1,0 +1,45 @@
+<cu-custom bgColor="bg-white" isBack="true">
+    <!-- <view slot="backText">返回</view> -->
+    <view slot="content">注册</view>
+</cu-custom>
+<!-- logo开始 -->
+<view class="logo-box">
+    <image class="logo" src="../../../static/images/logo.png"></image>
+</view>
+<!-- logo结束 -->
+<!-- 表单开始 -->
+<form catchsubmit="register">
+    <view class="cu-form-group">
+        <view class="title">用户名</view>
+        <input placeholder="请输入用户名(可以包含中文)" name="username"></input>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">密码</view>
+        <input placeholder="请输入密码" name="password" type="password"></input>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">确认密码</view>
+        <input placeholder="请确认密码" name="password2" type="password"></input>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">邮箱</view>
+        <input placeholder="请输入邮箱" name="email" type="email"></input>
+    </view>
+    <view wx:if="{{sechash}}" class="cu-form-group">
+        <view class="title">验证码</view>
+        <input placeholder="请输入验证码" name="seccodeverify"></input>
+        <view class="cu-avatar radius" bindtap="downSeccode">
+            <image :src="imageSrc"></image>
+        </view>
+    </view>
+
+    <view class="padding">
+        <button class="cu-btn block bg-green margin-tb-sm lg" form-type="submit">注册</button>
+        <view class="flex justify-center margin-tb-sm text-gray">
+            <text>注册表明您已接受</text>
+            <text class="text-blue">用户隐私条款</text>
+        </view>
+    </view>
+</form>
+
+<!-- 表单结束 -->
