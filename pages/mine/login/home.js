@@ -3,6 +3,7 @@ const app = getApp()
 const commonLoginUrl = require('../../../config/config').commonLoginUrl
 const getTokenUrl = require('../../../config/config').tokenUrl
 const loginmanager = require('../../../utils/loginManager')
+const registerPath = require('../../../utils/path').default.registerPath
 Page({
 
   /**
@@ -10,7 +11,7 @@ Page({
    */
   data: {
     // 密码类型
-    pwdType: 'password',
+    pwdType: true,
 
     // 验证码相关
     sechash: '',
@@ -93,6 +94,25 @@ Page({
           })
         }
       })
+  },
+
+  /**
+   * 显示/隐藏密码
+   */
+  showOrHide(){
+    let that = this
+    let status = that.data.pwdType
+    if(status){
+      // 已经隐藏，要显示密码
+      that.setData({
+        pwdType: false
+      })
+    }else{
+      // 已经显示，要隐藏密码
+      that.setData({
+        pwdType: true
+      })
+    }
   },
 
   /**
@@ -186,4 +206,11 @@ Page({
         console.log(e)
       })
   },
+
+  /**
+   * 跳转到注册页
+   */
+  toRegister(){
+    app.wxApi.navigateTo(registerPath);
+  }
 })

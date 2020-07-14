@@ -15,9 +15,10 @@
     </view>
     <view class="cu-form-group">
         <view class="title">密码</view>
-        <input placeholder="请输入密码" name="password" :type="pwdType"></input>
-        <view class="cu-capsule">
-            <text class="lg text-gray cuIcon-attentionforbid"></text>
+        <input placeholder="请输入密码" name="password" password="{{pwdType}}"></input>
+        <view class="cu-capsule" bindtap="showOrHide">
+            <text wx:if="{{pwdType}}" class="lg text-gray cuIcon-attentionforbid"></text>
+            <text wx:else class="lg text-gray cuIcon-attention"></text>
         </view>
     </view>
     <view wx:if="{{sechash}}" class="cu-form-group">
@@ -30,10 +31,10 @@
 
     <view class="padding">
         <button class="cu-btn block bg-green margin-tb-sm lg" form-type="submit">登录</button>
-        <button class="cu-btn block bg-white margin-tb-sm lg">注册</button>
-        <view class="flex justify-end margin-tb-sm text-gray ">
+        <button class="cu-btn block bg-white margin-tb-sm lg" bindtap="toRegister">注册</button>
+        <!-- <view class="flex justify-end margin-tb-sm text-gray ">
             <text>忘记密码？</text>
-        </view>
+        </view> -->
     </view>
 </form>
 <!-- 表单结束 -->
