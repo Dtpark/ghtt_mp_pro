@@ -83,7 +83,28 @@
     <!-- 今日课表结束 -->
 
     <!-- 一卡通开始 -->
-    <view class="campuscard-box margin-lr-sm padding-sm bg-blue text-white text-df">
+
+
+    <view class="cu-list menu-avatar padding-lr-sm margin-tb-sm text-white bg-white" bindtap="">
+        <view class="cu-item card">
+            <!-- <view class="cu-avatar round lg" style="background-image:url('');"></view> -->
+            <view class="cu-avatar round lg cuIcon-card bg-blue"></view>
+            <view class="content">
+                <view class="text-lg">
+                    <text class="text-cut">校园一卡通</text>
+                    <!-- <view class="cu-tag round bg-orange sm">断开连接...</view> -->
+                </view>
+                <view class=" text-sm flex">
+                    <text class="text-cut"> 余额：233元</text>
+                </view>
+            </view>
+            <view class="action">
+                <text class="cuIcon-right lg text-white"></text>
+            </view>
+        </view>
+    </view>
+
+    <!-- <view class="campuscard-box margin-lr-sm padding-sm bg-blue text-white text-df">
         <view class="flex">
             <view class="flex-sub">2020-07-16</view>
             <view class="flex-sub text-right">第*周 星期四</view>
@@ -99,7 +120,11 @@
         <view class="campuscard-right solid-bottom text-xxl">
             <text class=" cuIcon-roundright text-white"></text>
         </view>
-    </view>
+    </view> -->
+
+
+
+
     <!-- 一卡通结束 -->
     <!-- 空白的tabbar栏高度开始 -->
     <view class='cu-tabbar-height'></view>

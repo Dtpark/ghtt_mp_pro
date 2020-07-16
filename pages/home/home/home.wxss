@@ -32,6 +32,27 @@
 
 /* 一卡通开始 */
 
+.cu-list.menu-avatar>.cu-item {
+    background-color: var(--blue);
+}
+
+.cu-list.menu-avatar>.cu-item .action {
+    text-align: right;
+    /* width: 140rpx;
+    height: 100%;
+    background-image: url(https://image.weilanwl.com/color2.0/cardBg.png);
+    background-size: 100%; */
+}
+
+.card {
+    /* background-size: 100%; */
+    background-image: url(http://ghttdata.hitwh.cc/data/attachment/forum/202007/16/204548kjaoafefooyhzrhw.png);
+    background-repeat: no-repeat;
+    background-size: 100rpx 100rpx;
+    background-position-x: 550rpx;
+    background-position-y: center;
+}
+
 .campuscard-box {
     width: 710rpx;
     height: 443.75rpx;
