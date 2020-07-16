@@ -1,29 +1,63 @@
 /* pages/home/home/home.wxss */
- 
- 
-@keyframes remindMessage {
-    0% {
-      -webkit-transform: translateX(90%);
-    }
-   
-    100% {
-      -webkit-transform: translateX(-180%);
-    }
-  }
-   
-  .tongzhitext {
-    line-height: 50rpx;
-    margin-left:10rpx;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-   
-  .tongzhi-text {
-    font-size: 28rpx;
-  animation: remindMessage 15s linear infinite;
-      width: 100%;
-    color: #000;
-    display: block;
-  }
-   
+
+
+/* 快讯开始 */
+
+
+/* 快讯结束 */
+
+
+/* 今日课表开始 */
+
+.timetable-box {
+    position: relative;
+}
+
+.nav .cu-item {
+    height: auto;
+    line-height: 40rpx;
+    margin-right: 10rpx;
+    padding: 20rpx;
+}
+
+.timetable-right {
+    position: absolute;
+    bottom: 45rpx;
+    right: 30rpx;
+}
+
+
+/* 今日课表结束 */
+
+
+/* 一卡通开始 */
+
+.campuscard-box {
+    width: 710rpx;
+    height: 443.75rpx;
+    background-image: url(https://image.weilanwl.com/color2.0/cardBg.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: relative;
+}
+
+.campuscard-bd {
+    width: 100%;
+    position: absolute;
+    bottom: 200rpx;
+}
+
+.camupscard-ft {
+    width: 100%;
+    position: absolute;
+    bottom: 20rpx
+}
+
+.campuscard-right {
+    position: absolute;
+    right: 10rpx;
+    bottom: 200rpx;
+}
+
+
+/* 一卡通结束 */

@@ -1,9 +1,107 @@
-<!-- 轮播图开始 -->
-<banner bannerImgUrls="{{bannerImgUrls}}"></banner>
-<!-- 轮播图结束 -->
-<!-- 快讯开始 -->
+<scroll-view scroll-y="true" class="scrollPagel">
+    <!-- 轮播图开始 -->
+    <banner bannerImgUrls="{{bannerImgUrls}}"></banner>
+    <!-- 轮播图结束 -->
 
-<!-- 快讯结束 -->
-<view class='tongzhitext'>
-    <text class="tongzhi-text">这点是公告内容，长度要和动画的设置长度一起调整</text>
-</view>
+    <!-- 快讯开始 -->
+    <view class="box">
+        <view class="cu-bar bg-white">
+            <view class="action title-style-3" style="width: 690rpx;">
+                <view style="width: 23%;">
+                    <text class="text-xl text-bold text-black">观海</text>
+                    <text class="text-xl text-bold text-blue ">快讯</text>
+                </view>
+                <text style="width: 78%;" class="text-black self-center text-cut">[校网] 关于巴拉巴拉巴拉巴拉12345699999888</text>
+            </view>
+        </view>
+    </view>
+    <!-- 快讯结束 -->
+
+    <!-- 应用开始 -->
+
+    <view class="cu-list grid col-5 no-border margin-tb-sm">
+        <view class="cu-item" wx:for="{{iconList}}" wx:key="index" wx:if="{{index<5*2}}">
+            <view class="cuIcon-{{item.icon}} text-{{item.color}}">
+                <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+                    <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+                </view>
+            </view>
+            <text>{{item.name}}</text>
+        </view>
+    </view>
+
+    <!-- 应用结束 -->
+
+    <!-- 今日课表开始 -->
+
+    <view class="timetable-box">
+        <scroll-view scroll-x class="bg-white padding-left-sm margin-tb-sm nav " scroll-into-view="scroll-7" scroll-with-animation>
+
+            <view class="cu-item marign-right-sm bg-yellow text-white" style="width: 276rpx; ">
+                <view class="text-cut text-lg">工科数学分析11111111111111</view>
+                <view class="text-sm">第 1 大节</view>
+                <view class="text-sm">@M201</view>
+            </view>
+
+            <view class="cu-item marign-right-sm bg-blue text-white" style="width: 276rpx; ">
+                <view class="text-cut text-df">工科数学分析11111111111111</view>
+                <view class="text-sm">第 1 大节</view>
+                <view class="text-sm">@M201</view>
+            </view>
+
+            <view class="cu-item padding-lr-xl bg-pink text-white" style="width: 276rpx; ">
+                <view class="text-cut text-df">工科数学分析11111111111111</view>
+                <view class="text-sm">第 1 大节</view>
+                <view class="text-sm">@M201</view>
+            </view>
+
+            <view class="cu-item padding-lr-xl bg-red text-white" style="width: 276rpx; ">
+                <view class="text-cut text-df">工科数学分析11111111111111</view>
+                <view class="text-sm">第 1 大节</view>
+                <view class="text-sm">@M201</view>
+            </view>
+
+            <view class="cu-item padding-lr-xl bg-black text-white" style="width: 276rpx; ">
+                <view class="text-cut text-df">工科数学分析11111111111111</view>
+                <view class="text-sm">第 1 大节</view>
+                <view class="text-sm">@M201</view>
+            </view>
+
+            <view class="cu-item padding-lr-xl bg-pink text-white" style="width: 276rpx; ">
+                <view class="text-cut text-df">工科数学分析11111111111111</view>
+                <view class="text-sm">第 1 大节</view>
+                <view class="text-sm">@M201</view>
+            </view>
+        </scroll-view>
+
+        <view class="timetable-right solid-bottom text-xxl">
+            <text class=" cuIcon-roundright text-black"></text>
+        </view>
+
+    </view>
+
+    <!-- 今日课表结束 -->
+
+    <!-- 一卡通开始 -->
+    <view class="campuscard-box margin-lr-sm padding-sm bg-blue text-white text-df">
+        <view class="flex">
+            <view class="flex-sub">2020-07-16</view>
+            <view class="flex-sub text-right">第*周 星期四</view>
+        </view>
+
+        <view class="campuscard-bd">
+            <view class="text-center text-xl">余额：*元</view>
+        </view>
+        <view class="flex camupscard-ft">
+            <view class="flex-sub">今日交易:</view>
+            <view class="flex-treble text-cut">您今日尚未刷卡消费</view>
+        </view>
+        <view class="campuscard-right solid-bottom text-xxl">
+            <text class=" cuIcon-roundright text-white"></text>
+        </view>
+    </view>
+    <!-- 一卡通结束 -->
+    <!-- 空白的tabbar栏高度开始 -->
+    <view class='cu-tabbar-height'></view>
+    <!-- 空白的tabbar栏高度结束 -->
+</scroll-view>
