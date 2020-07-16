@@ -1,10 +1,30 @@
 // pages/home/home/home.js
 Page({
+  options: {
+    addGlobalClass: true,
+  },
 
   /**
    * 页面的初始数据
    */
   data: {
+    bannerImgUrls: {
+      0:{
+        image_url:
+          "https://ghttdata.hitwh.cc/data/attachment/forum/201907/08/151218k9m51mm5f61mk5v9.png",
+        type: 0,
+        title: '',
+        d_id: ''
+      },
+      1:{
+        image_url:
+          "https://ghttdata.hitwh.cc/data/attachment/forum/201907/08/151218k9m51mm5f61mk5v9.png",
+        type: 0,
+        title: '',
+        d_id: ''
+      }
+
+    }
 
   },
 

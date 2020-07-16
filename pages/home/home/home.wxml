@@ -1,2 +1,9 @@
-<!--pages/home/home/home.wxml-->
-<text>pages/home/home/home.wxml</text>
+<!-- 轮播图开始 -->
+<banner bannerImgUrls="{{bannerImgUrls}}"></banner>
+<!-- 轮播图结束 -->
+<!-- 快讯开始 -->
+
+<!-- 快讯结束 -->
+<view class='tongzhitext'>
+    <text class="tongzhi-text">这点是公告内容，长度要和动画的设置长度一起调整</text>
+</view>

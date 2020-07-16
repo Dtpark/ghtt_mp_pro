@@ -1,1 +1,29 @@
 /* pages/home/home/home.wxss */
+ 
+ 
+@keyframes remindMessage {
+    0% {
+      -webkit-transform: translateX(90%);
+    }
+   
+    100% {
+      -webkit-transform: translateX(-180%);
+    }
+  }
+   
+  .tongzhitext {
+    line-height: 50rpx;
+    margin-left:10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+   
+  .tongzhi-text {
+    font-size: 28rpx;
+  animation: remindMessage 15s linear infinite;
+      width: 100%;
+    color: #000;
+    display: block;
+  }
+   
