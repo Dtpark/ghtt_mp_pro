@@ -1,0 +1,6 @@
+{
+    "component": true,
+    "usingComponents": {
+        "search": "/components/top_search_bar/search"
+    }
+}
