@@ -4,17 +4,24 @@
     <!-- 轮播图结束 -->
 
     <!-- 快讯开始 -->
-    <view class="box">
-        <view class="cu-bar bg-white">
-            <view class="action title-style-3" style="width: 690rpx;">
-                <view style="width: 23%;">
-                    <text class="text-xl text-bold text-black">观海</text>
-                    <text class="text-xl text-bold text-blue ">快讯</text>
-                </view>
-                <text style="width: 78%;" class="text-black self-center text-cut">[校网] 关于巴拉巴拉巴拉巴拉12345699999888</text>
+
+    <view class="cu-bar bg-white">
+        <view class="action title-style-3" style="width: 690rpx;">
+            <view class="notice_title" style="width: 23%;">
+                <text class="text-xl text-bold text-black">观海</text>
+                <text class="text-xl text-bold text-blue ">快讯</text>
             </view>
+            <!-- <text style="width: 78%;" class="text-black self-center text-cut text-df">[校网] 关于巴拉巴拉巴拉巴拉12345699999888</text> -->
+            <swiper style="width: 78%;" class="notice_swiper" vertical="true" autoplay="true" interval="5000" duration="500" circular="true">
+                <swiper-item class="flex align-center" wx:for="{{noticeList}}" wx:for-item="item" wx:key="index">
+                    <view class="text-black text-cut text-df" bindtap="showNoticeDetail" data-para="{{item}}">
+                        [ {{item['type']}} ] {{ item['title'] }}
+                    </view>
+                </swiper-item>
+            </swiper>
         </view>
     </view>
+
     <!-- 快讯结束 -->
 
     <!-- 应用开始 -->
@@ -38,7 +45,7 @@
         <scroll-view scroll-x class="bg-white padding-left-sm margin-tb-sm nav " scroll-into-view="scroll-7" scroll-with-animation>
 
             <view class="cu-item marign-right-sm bg-yellow text-white" style="width: 276rpx; ">
-                <view class="text-cut text-lg">工科数学分析11111111111111</view>
+                <view class="text-cut text-df">工科数学分析11111111111111</view>
                 <view class="text-sm">第 1 大节</view>
                 <view class="text-sm">@M201</view>
             </view>
@@ -61,7 +68,7 @@
                 <view class="text-sm">@M201</view>
             </view>
 
-            <view class="cu-item padding-lr-xl bg-black text-white" style="width: 276rpx; ">
+            <view class="cu-item padding-lr-xl bg-yellow text-white" style="width: 276rpx; ">
                 <view class="text-cut text-df">工科数学分析11111111111111</view>
                 <view class="text-sm">第 1 大节</view>
                 <view class="text-sm">@M201</view>
@@ -74,8 +81,8 @@
             </view>
         </scroll-view>
 
-        <view class="timetable-right solid-bottom text-xxl">
-            <text class=" cuIcon-roundright text-black"></text>
+        <view class="timetable-right text-lg">
+            <text class=" cuIcon-right text-black"></text>
         </view>
 
     </view>
@@ -86,7 +93,7 @@
 
 
     <view class="cu-list menu-avatar padding-lr-sm margin-tb-sm text-white bg-white" bindtap="">
-        <view class="cu-item card">
+        <view class="cu-item card bg-blue card_bg">
             <!-- <view class="cu-avatar round lg" style="background-image:url('');"></view> -->
             <view class="cu-avatar round lg cuIcon-card bg-blue"></view>
             <view class="content">
@@ -121,10 +128,6 @@
             <text class=" cuIcon-roundright text-white"></text>
         </view>
     </view> -->
-
-
-
-
     <!-- 一卡通结束 -->
     <!-- 空白的tabbar栏高度开始 -->
     <view class='cu-tabbar-height'></view>

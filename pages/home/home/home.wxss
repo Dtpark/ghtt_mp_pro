@@ -3,6 +3,11 @@
 
 /* 快讯开始 */
 
+.notice_swiper {
+    height: 100rpx;
+    /* line-height: 1.2; */
+}
+
 
 /* 快讯结束 */
 
@@ -22,7 +27,7 @@
 
 .timetable-right {
     position: absolute;
-    bottom: 45rpx;
+    bottom: 60rpx;
     right: 30rpx;
 }
 
@@ -32,16 +37,13 @@
 
 /* 一卡通开始 */
 
-.cu-list.menu-avatar>.cu-item {
-    background-color: var(--blue);
+.card_bg {
+    background-color: var(--blue)!important;
 }
 
 .cu-list.menu-avatar>.cu-item .action {
     text-align: right;
-    /* width: 140rpx;
-    height: 100%;
-    background-image: url(https://image.weilanwl.com/color2.0/cardBg.png);
-    background-size: 100%; */
+    font-size: 32rpx;
 }
 
 .card {
