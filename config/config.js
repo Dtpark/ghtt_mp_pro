@@ -4,15 +4,15 @@
 
 // const host = 'bbs.comsenz-service.com'
 // discuz论坛域名
-// const dzHost = 'dz.wangxiaopeng.net'
-const dzHost = 'bbs.ghtt.net'
+const dzHost = 'dz.wangxiaopeng.net'
+    // const dzHost = 'bbs.ghtt.net'
     // const host = 'dz.com'
     // http前缀
 const httpPre = 'https://'
     // const httpPre = 'http://'
     // UCenter 域名
-    // const uc = 'uc.wangxiaopeng.net'
-const uc = 'uc.ghtt.net'
+const uc = 'uc.wangxiaopeng.net'
+    // const uc = 'uc.ghtt.net'
     // 二开的UCenter API 域名
 const api = 'ut.dtpark.top'
 
