@@ -1,6 +1,6 @@
 <search bgColor="bg-white" msg="搜索"></search>
 
-<scroll-view class="scrollPage" scroll-y bindscroll="bindScroll" style="height: {{screenHeight - customBar}}px;">
+<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" bindscroll="bindScroll" bindscrolltolower="loadMore" style="height: {{screenHeight - customBar}}px;">
 
     <!-- 功能区开始 -->
     <view class="grid col-2 padding-sm">
@@ -44,8 +44,8 @@
     <!-- 帖子列表开始 -->
     <view class="cu-card dynamic">
 
-        <!-- 无图片的帖子开始 -->
-        <view class="cu-item shadow" wx:for="{{datalist}}" wx:for-item="cellItem" wx:key="index">
+        <!-- 帖子开始 -->
+        <view class="cu-item shadow" wx:for="{{datalist}}" wx:for-item="cellItem" wx:for-index="cellidx" wx:key="index">
             <view class="cu-list menu-avatar">
                 <view class="cu-item">
                     <view class="cu-avatar round lg" style="background-image:url({{cellItem.author?cellItem.avatar:userAvatar}});">
@@ -53,7 +53,7 @@
                     <view class="content flex-sub">
                         <view>{{cellItem.author?cellItem.author:'匿名'}}</view>
                         <view class="text-gray text-sm flex justify-between">
-                            {{cellItem.dateline}}
+                            <text decode="true">{{cellItem.dateline}}</text>
                         </view>
                     </view>
                 </view>
@@ -74,26 +74,57 @@
             <view wx:if="{{cellItem.attachlist.length > 0}}">
                 <!-- 图片附件开始 -->
                 <view class="grid flex-sub padding-lr {{(cellItem.imageA.length > 1)?'col-3 grid-square':'col-1'}}">
-                    <view wx:if="{{aidx < (cellItem.videoA.length > 0 ? 8 : 9)}}" wx:for="{{cellItem.imageA}}" wx:for-index="aidx" wx:for-item="attItem" wx:key="{{attItem.aid}}" class="bg-img {{cellItem.imageA.length > 1?'':'only-img'}}" style="background-image:url({{attItem.thumb}});">
+                    <view wx:if="{{aidx < (cellItem.videoA.length > 0 ? 8 : 9)}}" wx:for="{{cellItem.imageA}}" wx:for-index="aidx" wx:for-item="attItem" wx:key="aid" class="bg-img {{cellItem.imageA.length > 1?'':'only-img'}}" style="background-image:url({{attItem.thumb}});"
+                        id="{{aidx}}" data-cellindex="{{cellidx}}" catchtap="lookImage">
                     </view>
                 </view>
                 <!-- 图片附件结束 -->
             </view>
             <!-- 附件结束 -->
-            <view class="text-gray text-sm flex padding text-lg">
-                <view class="flex-sub text-left"><text class="cuIcon-attentionfill margin-lr-xs"></text>{{cellItem.views}}</view>
-                <view class="flex-sub text-center"><text class="flex-sub cuIcon-messagefill margin-lr-xs"></text>{{cellItem.replies}}
+            <view class="text-gray text-sm flex padding text-df">
+                <view class="flex-sub text-left"><text class="cuIcon-appreciatefill margin-lr-xs"></text>赞 {{cellItem.recommend_add}}
                 </view>
-                <view class="flex-sub text-right"><text class="flex-sub cuIcon-appreciatefill margin-lr-xs"></text>{{cellItem.recommend_add}}
+                <view class="flex-sub text-center"><text class="flex-sub cuIcon-messagefill margin-lr-xs"></text>评论 {{cellItem.replies}}
+                </view>
+                <view class="flex-sub text-right" catchtap="showModal"><text class="flex-sub cuIcon-forwardfill margin-lr-xs"></text>转发
                 </view>
 
             </view>
         </view>
-        <!-- 无图片的帖子结束 -->
+        <!-- 帖子结束 -->
     </view>
     <!-- 帖子列表结束 -->
 
     <!-- 空白的tabbar栏高度开始 -->
     <view class='cu-tabbar-height'></view>
     <!-- 空白的tabbar栏高度结束 -->
+
+
 </scroll-view>
+<!-- 底部模态框（分享）开始 -->
+<view class="cu-modal bottom-modal {{isShare?'show':''}}" bindtap="hideModal">
+    <view class="cu-dialog">
+        <view class="padding-bottom-xs bg-gray">
+            <!-- 内容开始 -->
+            <view class="cu-list grid col-2 no-border">
+                <view class="cu-item" catchtap="createPic">
+                    <view class="cuIcon-pic text-gray">
+                    </view>
+                    <text>生成海报</text>
+                </view>
+                <view class="cu-item" catchtap="sharePost">
+                    <!-- <button open-type="share"> -->
+                    <view class="cuIcon-weixin text-gray">
+                    </view>
+                    <text>微信分享</text>
+                    <!-- </button> -->
+                </view>
+            </view>
+            <!-- 内容结束 -->
+        </view>
+        <view class="cu-bar bg-white justify-center ">
+            <view class="action" bindtap="hideModal">取消</view>
+        </view>
+    </view>
+</view>
+<!-- 底部模态框（分享）结束 -->

@@ -1,5 +1,6 @@
 // pages/find/home/home.js
 const app = getApp()
+const checkUrl = require('../../../config/config').checkUrl
 const newrepUrl = require('../../../config/config').newrepUrl
 const newestUrl = require('../../../config/config').newestUrl
 const hotUrl = require('../../../config/config').hotUrl
@@ -52,12 +53,20 @@ Component({
         TabCur: 0,
         scrollLeft: 0,
 
+        // 距离顶部距离
+        topNum: 0,
+
         // 帖子列表
         datalist: [],
         // 帖子页面
         page: 1,
 
-        userAvatar: userAvatar
+        userAvatar: userAvatar,
+
+        // 是否显示底部模态框（分享）
+        isShare: false,
+        // 待分享的帖子id
+        fid: ''
     },
 
     /**
@@ -69,7 +78,10 @@ Component({
             let that = this
 
             // 获取帖子列表
+            app.wxApi.showLoading()
             that.getListData()
+
+            that.allowpostcomment()
 
 
         },
@@ -103,10 +115,11 @@ Component({
             that.setData({
                 TabCur: e.currentTarget.dataset.id,
                 scrollLeft: (e.currentTarget.dataset.id - 1) * 60,
-                page: 1
+                page: 1,
+                topNum: 0
             })
+            app.wxApi.showLoading()
             that.getListData()
-
         },
 
         // 请求列表数据(最新回复/最新主题/热门回复/精华主题)
@@ -182,6 +195,11 @@ Component({
                 if (that.data.page > 1) {
                     datalist = that.data.datalist.concat(datalist)
                 }
+
+                if (datalist.length == 0) {
+                    app.wxApi.showToast({ title: '没有更多了', icon: 'none' })
+                }
+
                 that.setData({
                     datalist: datalist
                 })
@@ -190,6 +208,76 @@ Component({
                 // wx.stopPullDownRefresh();
             })
         },
+
+        // 获取评论权限
+        allowpostcomment: function() {
+            let url = checkUrl
+            app.apimanager.getRequest(url).then(res => {
+                // 回复等级
+                let repliesrank = res.setting.repliesrank;
+                // ？？？允许回复评论？？？
+                let allowpostcomment = res.setting.allowpostcomment;
+                app.globalData.repliesrank = repliesrank
+                app.globalData.allowpostcomment = allowpostcomment
+            }).catch(res => {
+                console.log(res)
+            })
+        },
+
+        // 查看图片
+        lookImage(e) {
+            let that = this
+            let cellItem = that.data.datalist[e.currentTarget.dataset.cellindex]
+            let imageA = cellItem.imageA
+            let imageSrcArray = [];
+            for (let i = 0; i < imageA.length; i++) {
+                let item = imageA[i]
+                imageSrcArray.push(item.attachment)
+            }
+            app.wxApi.previewImage({
+                current: imageSrcArray[e.currentTarget.id],
+                urls: imageSrcArray
+            })
+        },
+
+        // 触底加载更多
+        loadMore() {
+            let that = this
+            that.data.page++
+                app.wxApi.showLoading()
+            that.getListData()
+        },
+
+        // 显示模态框
+        showModal() {
+            let that = this
+            that.setData({
+                isShare: true
+            })
+
+        },
+
+        // 隐藏模态框
+        hideModal() {
+            let that = this
+            that.setData({
+                isShare: false
+            })
+        },
+
+        // 生成海报
+        createPic() {
+            console.log('生成海报')
+            app.wxApi.showToast({ title: "尚未开发，敬请期待", icon: 'none' })
+        },
+
+        // 微信分享
+        sharePost() {
+            console.log('微信分享')
+            app.wxApi.showToast({ title: "尚未开发，敬请期待", icon: 'none' })
+        },
+
+
 
     }
 })

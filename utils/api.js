@@ -86,8 +86,13 @@ class wxAPIManager {
     }
 
     // 显示模态框
-    showModal(params = { title: '提示', content: '', showCancel: true, cancelText: '取消', cancelColor: '#000', confimText:'确认', confirmColor: '#3CC51F'}) {
+    showModal(params = { title: '提示', content: '', showCancel: true, cancelText: '取消', cancelColor: '#000', confimText: '确认', confirmColor: '#3CC51F' }) {
         return this.promisify('showModal', params)
+    }
+
+    // 预览图片
+    previewImage(params = {}) {
+        return this.promisify('previewImage', params)
     }
 
 
