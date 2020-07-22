@@ -65,8 +65,11 @@ Component({
 
         // 是否显示底部模态框（分享）
         isShare: false,
-        // 待分享的帖子id
-        fid: ''
+        // 待分享的帖子信息
+        shareInfo: {
+            title: '',
+            path: ''
+        }
     },
 
     /**
@@ -154,6 +157,11 @@ Component({
                 // wx.stopPullDownRefresh()
                 // 请求到的帖子列表
                 let datalist = res.Variables.data ? res.Variables.data : []
+
+                if (datalist.length == 0) {
+                    app.wxApi.showToast({ title: '没有更多了', icon: 'none' })
+                }
+
                 for (let i = 0; i < datalist.length; i++) {
                     let postItem = datalist[i]
                     let listindex = i + that.data.datalist.length
@@ -194,10 +202,6 @@ Component({
                 }
                 if (that.data.page > 1) {
                     datalist = that.data.datalist.concat(datalist)
-                }
-
-                if (datalist.length == 0) {
-                    app.wxApi.showToast({ title: '没有更多了', icon: 'none' })
                 }
 
                 that.setData({
@@ -249,10 +253,15 @@ Component({
         },
 
         // 显示模态框
-        showModal() {
+        showModal(e) {
             let that = this
+            console.log(e)
             that.setData({
-                isShare: true
+                isShare: true,
+                shareInfo: {
+                    title: e.currentTarget.dataset.title,
+                    path: '/pages/mine/login/home?title=' + e.currentTarget.dataset.tid
+                }
             })
 
         },
@@ -269,14 +278,7 @@ Component({
         createPic() {
             console.log('生成海报')
             app.wxApi.showToast({ title: "尚未开发，敬请期待", icon: 'none' })
-        },
-
-        // 微信分享
-        sharePost() {
-            console.log('微信分享')
-            app.wxApi.showToast({ title: "尚未开发，敬请期待", icon: 'none' })
-        },
-
+        }
 
 
     }

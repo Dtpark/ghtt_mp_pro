@@ -40,7 +40,7 @@ const config = {
     pollvoteUrl: `${dzApiUrl}module=pollvote&pollsubmit=yes&version=4`,
     polloptionUrl: `${dzApiUrl}module=forummisc&action=viewvote&version=5`,
     forumdisplayUrl: `${dzApiUrl}module=forumdisplay&version=5`,
-    searchThreadUrl: `${dzApiUrl}module=threadsearch&&version=4`,
+    searchThreadUrl: `${dzApiUrl}module=threadsearch&&versidispon=4`,
     bestanswerUrl: `${dzApiUrl}module=bestanswer&version=4`,
     saveformidUrl: `${dzApiUrl}module=saveformid&version=4`,
     payInfoUrl: `${dzApiUrl}module=minapp_payment&version=4`,

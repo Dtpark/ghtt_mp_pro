@@ -5,3 +5,20 @@
 
 
 /* 顶部导航栏结束 */
+
+
+/* 底部模态框开始 */
+
+.shareBtn {
+    /* width: auto; */
+    line-height: initial;
+    padding: 0;
+    background-color: initial;
+}
+
+.shareBtn::after {
+    border: none;
+}
+
+
+/* 底部模态框结束 */

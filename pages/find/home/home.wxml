@@ -86,7 +86,7 @@
                 </view>
                 <view class="flex-sub text-center"><text class="flex-sub cuIcon-messagefill margin-lr-xs"></text>评论 {{cellItem.replies}}
                 </view>
-                <view class="flex-sub text-right" catchtap="showModal"><text class="flex-sub cuIcon-forwardfill margin-lr-xs"></text>转发
+                <view class="flex-sub text-right" catchtap="showModal" data-tid="{{cellItem.tid}}" data-title="{{cellItem.subject}}"><text class="flex-sub cuIcon-forwardfill margin-lr-xs"></text>转发
                 </view>
 
             </view>
@@ -112,12 +112,12 @@
                     </view>
                     <text>生成海报</text>
                 </view>
-                <view class="cu-item" catchtap="sharePost">
-                    <!-- <button open-type="share"> -->
+                <view class="cu-item" catchtap="sharePost" data-items="测试">
+                    <button class="shareBtn" open-type="share" data-shareInfo="{{shareInfo}}">
                     <view class="cuIcon-weixin text-gray">
                     </view>
                     <text>微信分享</text>
-                    <!-- </button> -->
+                    </button>
                 </view>
             </view>
             <!-- 内容结束 -->
