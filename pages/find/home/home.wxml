@@ -46,7 +46,7 @@
     <view class="cu-card dynamic">
 
         <!-- 帖子开始 -->
-        <view class="cu-item shadow" wx:for="{{datalist}}" wx:for-item="cellItem" wx:for-index="cellIdx" wx:key="{{cellIdx}}" id="{{cellIdx}}" bindtap="cellClick">
+        <view class="cu-item shadow" wx:for="{{datalist}}" wx:for-item="cellItem" wx:for-index="cellIdx" wx:key="cellIdx" id="{{cellIdx}}" bindtap="cellClick">
             <view class="cu-list menu-avatar">
                 <view class="cu-item">
                     <view class="cu-avatar round lg" style="background-image:url({{cellItem.author?cellItem.avatar:userAvatar}});">
@@ -76,7 +76,7 @@
                 <!-- 图片附件开始 -->
                 <view class="grid flex-sub padding-lr {{(cellItem.imageA.length > 1)?'col-3 grid-square':'col-1'}}">
                     <view wx:if="{{aidx < (cellItem.videoA.length > 0 ? 8 : 9)}}" wx:for="{{cellItem.imageA}}" wx:for-index="aidx" wx:for-item="attItem" wx:key="aid" class="bg-img {{cellItem.imageA.length > 1?'':'only-img'}}" style="background-image:url({{attItem.thumb}});"
-                        id="{{aidx}}" data-cellindex="{{cellidx}}" catchtap="lookImage">
+                        id="{{aidx}}" data-cellindex="{{cellIdx}}" catchtap="lookImage">
                     </view>
                 </view>
                 <!-- 图片附件结束 -->
