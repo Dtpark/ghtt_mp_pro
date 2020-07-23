@@ -1,7 +1,3 @@
-<cu-custom bgColor="bg-white" isBack="true">
-    <!-- <view slot="backText">返回</view> -->
-    <view slot="content">注册</view>
-</cu-custom>
 <!-- logo开始 -->
 <view class="logo-box">
     <image class="logo" src="../../../static/images/logo.png"></image>

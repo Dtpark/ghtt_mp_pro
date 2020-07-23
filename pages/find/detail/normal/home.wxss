@@ -1,0 +1,11 @@
+/* pages/find/detail/normal/home.wxss */
+
+
+/* 引用开始 */
+
+.quote {
+    padding: 0 30rpx 0;
+}
+
+
+/* 引用结束 */

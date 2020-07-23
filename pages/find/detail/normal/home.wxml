@@ -1,0 +1,111 @@
+<view class="cu-card dynamic no-card margin-bottom">
+    <!-- 主题开始 -->
+    <view class="cu-item shadow">
+        <!-- 作者信息开始 -->
+        <view class="cu-list menu-avatar">
+            <view class="cu-item">
+                <view class="cu-avatar round lg" style="background-image:url({{userAvatar}}{{datalist[0].authorid}});">
+                </view>
+                <view class="content flex-sub">
+                    <view>{{datalist[0].nickname?datalist[0].nickname:datalist[0].author}}</view>
+                    <view class="text-gray text-sm flex justify-between">
+                        {{datalist[0].dateline}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 作者信息结束 -->
+        <!-- 标题开始 -->
+        <view class="text-content text-xl text-black text-bold">
+            {{thread.subject}}
+        </view>
+        <!-- 标题结束 -->
+        <!-- 内容开始 -->
+        <view class="text-content">
+            <rich-text class="" nodes="{{datalist[0].message}}"></rich-text>
+        </view>
+        <!-- 内容结束 -->
+        <!-- 附件开始 -->
+        <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+            <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);" wx:for="{{isCard?9:1}}" wx:key="{{index}}">
+            </view>
+        </view>
+        <!-- 附件结束 -->
+        <!-- 版区开始 -->
+        <!-- 版区结束 -->
+        <!-- 点赞开始 -->
+        <!-- 点赞结束 -->
+        <!-- 底部开始 -->
+        <view class="text-gray text-df flex padding">
+            <view class="flex-sub text-left"><text></text>阅读 233</view>
+            <view class="flex-sub text-right"><text class="cuIcon-favor"> 收藏</text></view>
+        </view>
+        <!-- 底部结束 -->
+    </view>
+    <!-- 主题结束 -->
+
+    <!-- 回复开始 -->
+    <!-- 回复导航栏开始 -->
+    <view class="cu-bar bg-white margin-top-sm">
+        <view class="action">
+            <text class="text-black text-bold">*条评论</text>
+        </view>
+        <view class="action">
+            <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+                <view class="picker">
+                    {{picker[index]}}
+                    <text class="cuIcon-unfold"></text>
+                </view>
+            </picker>
+        </view>
+    </view>
+    <!-- 回复导航栏结束 -->
+
+    <!-- 回复列表开始 -->
+    <view class="cu-item shadow solids-bottom" wx:for="{{3}}">
+        <!-- 层主信息开始 -->
+        <view class="cu-list menu-avatar">
+            <view class="cu-item">
+                <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);">
+                </view>
+                <view class="content flex-sub">
+                    <view>凯尔</view>
+                    <view class="text-gray text-sm flex justify-between">
+                        2019年12月3日
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- 层主信息结束 -->
+        <!-- 评论内容开始 -->
+        <view class="text-content">
+            折磨生出苦难，苦难又会加剧折磨，凡间这无穷的循环，将有我来终结！
+        </view>
+        <!-- 评论内容结束 -->
+        <!-- 附件开始 -->
+        <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+            <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);" wx:for="{{isCard?9:1}}" wx:key="{{index}}">
+            </view>
+        </view>
+        <!-- 附件结束 -->
+        <view class="quote">
+            <view class="bg-gray padding-sm radius margin-top-sm">
+                <view class="flex">
+                    <view class="text-blue">莫甘娜：</view>
+                    <view class="flex-sub">如果不能立足于大地，要这双脚又有何用?</view>
+                </view>
+            </view>
+        </view>
+        <!-- 底部开始 -->
+        <view class="text-gray text-df text-right padding">
+            <text class="cuIcon-appreciatefill margin-lr-xs"></text>20
+            <text class="cuIcon-messagefill margin-lr-xs"></text>回复
+        </view>
+        <!-- 底部结束 -->
+    </view>
+    <!-- 回复列表结束 -->
+    <!-- 回复结束 -->
+</view>
+<!-- 空白的tabbar栏高度开始 -->
+<view class='cu-tabbar-height'></view>
+<!-- 空白的tabbar栏高度结束 -->
