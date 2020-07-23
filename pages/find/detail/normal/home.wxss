@@ -1,10 +1,26 @@
 /* pages/find/detail/normal/home.wxss */
 
+.cu-card.dynamic>.cu-item>.text-content {
+    max-height: none;
+}
+
 
 /* 引用开始 */
 
 .quote {
-    padding: 0 30rpx 0;
+    padding: 30rpx;
+    background-color: var(--greyLight);
+    /* background-color: var(--darkGray); */
+    border-radius: 6rpx;
+}
+
+.wxParse-blockquote {
+    background: var(--greyLight);
+}
+
+._blockquote .quote {
+    /* background-color: var(--greyLight)!important; */
+    background-color: #000!important;
 }
 
 

@@ -46,7 +46,7 @@
     <view class="cu-card dynamic">
 
         <!-- 帖子开始 -->
-        <view class="cu-item shadow" wx:for="{{datalist}}" wx:for-item="cellItem" wx:for-index="cellidx" wx:key="index">
+        <view class="cu-item shadow" wx:for="{{datalist}}" wx:for-item="cellItem" wx:for-index="cellIdx" wx:key="{{cellIdx}}" id="{{cellIdx}}" bindtap="cellClick">
             <view class="cu-list menu-avatar">
                 <view class="cu-item">
                     <view class="cu-avatar round lg" style="background-image:url({{cellItem.author?cellItem.avatar:userAvatar}});">

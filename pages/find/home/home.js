@@ -6,6 +6,7 @@ const newestUrl = require('../../../config/config').newestUrl
 const hotUrl = require('../../../config/config').hotUrl
 const digestUrl = require('../../../config/config').digestUrl
 const userAvatar = require('../../../config/config').userAvatar
+const detailPath = require('../../../utils/path').default.forumDetlPath
 Component({
     options: {
         addGlobalClass: true,
@@ -284,6 +285,35 @@ Component({
             that.getListData()
         },
 
+        // 获取帖子id并进入详情 
+        cellClick(e) {
+            let that = this
+            let item = that.data.datalist[e.currentTarget.id]
+            that.toDetail(item)
+        },
+
+        // 进入帖子详情页
+        toDetail(item) {
+            // 特殊主体
+            let special = item.special
+            let tid = item.tid
+            console.log(special)
+            let url = detailPath + '?tid='
+                // if (special == 1) {
+                //     url = '../questionnaire_detail/questionnaire_detail?tid='
+                // } else if (special == 3) {
+                //     url = '../question_answer_detail/question_answer_detail?tid='
+                // } else if (special == 4) {
+                //     url = '../activity_detail/activity_detail?tid='
+                // }
+            if (special != 0) {
+                app.wxApi.showToast({ title: '特殊帖子详情页暂未开发', icon: 'none' })
+                return false
+            }
+            url += tid
+            app.wxApi.navigateTo(url)
+        },
+
         // 显示模态框
         showModal(e) {
             let that = this
@@ -291,7 +321,7 @@ Component({
                 isShare: true,
                 shareInfo: {
                     title: e.currentTarget.dataset.title,
-                    path: '/pages/mine/login/home?title=' + e.currentTarget.dataset.tid
+                    path: detailPath + '?tid=' + e.currentTarget.dataset.tid
                 }
             })
 

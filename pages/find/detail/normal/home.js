@@ -2,6 +2,7 @@
 const app = getApp()
 const detailUrl = require('../../../../config/config').detailUrl
 const userAvatar = require('../../../../config/config').userAvatar
+const baseUrl = require('../../../../config/config').baseUrl
 Page({
 
     /**
@@ -10,7 +11,7 @@ Page({
     data: {
 
         // 主题号
-        tid: 9,
+        tid: 0,
         // 回帖页码
         pagenum: 1,
         // 每页条数
@@ -52,10 +53,10 @@ Page({
      */
     onLoad: function(options) {
         let that = this
-        if (options) {
-            // 获取主题id
-            let tid = options.tid;
-        }
+
+        // 获取主题id
+        let tid = options.tid;
+
         // 是否是圈子
         // var is_quan = options.is_quan ? options.is_quan : false
         // 获取用户id
@@ -64,9 +65,8 @@ Page({
         let repliesrank = app.globalData.repliesrank;
         let allowpostcomment = app.globalData.allowpostcomment;
         that.setData({
-            // tid: tid,
+            tid: tid,
             pagenum: 1,
-            // is_quan: is_quan,
             repliesrank: repliesrank,
             allowpostcomment: allowpostcomment,
             uid: uid
@@ -264,7 +264,7 @@ Page({
                         }
                     }
 
-                    var listindex = i + that.data.datalist.length
+                    let listindex = i + that.data.datalist.length
                         // 附件处理
                     let attachments = postItem.attachments
                     let imageA = []

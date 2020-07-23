@@ -1,0 +1,17 @@
+{
+  "name": "ghtt_mp_pro",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "parser-wx": "^1.0.0",
+    "wx-minicomponent": "^1.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

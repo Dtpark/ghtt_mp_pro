@@ -1,7 +1,6 @@
 {
     "pages": [
 
-        "pages/find/detail/normal/home",
 
         "pages/index/index",
         "pages/logs/logs",
@@ -9,7 +8,8 @@
         "pages/apps/home/home",
         "pages/mine/login/home",
         "pages/mine/setting/home",
-        "pages/mine/register/home"
+        "pages/mine/register/home",
+        "pages/find/detail/normal/home"
 
     ],
     "window": {
@@ -27,6 +27,7 @@
     "sitemapLocation": "sitemap.json",
     "usingComponents": {
         "cu-custom": "/colorui/components/cu-custom",
-        "banner": "/components/banner/banner"
+        "banner": "/components/banner/banner",
+        "parser": "/components/parser/parser"
     }
 }
