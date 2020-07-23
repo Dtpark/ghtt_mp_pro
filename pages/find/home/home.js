@@ -42,11 +42,11 @@ Component({
                 title: "最新主题"
             },
             {
-                title: "热门主题"
+                title: "本周热门"
             },
-            {
-                title: "精华主题"
-            },
+            // {
+            //     title: "本周精华"
+            // },
         ],
         // 索引
         index: 0,
@@ -62,6 +62,12 @@ Component({
         page: 1,
 
         userAvatar: userAvatar,
+
+        // 下拉刷新状态（是否在下拉刷新）
+        triggered: false,
+
+        // 是否在触底加载
+        isMore: false,
 
         // 是否显示底部模态框（分享）
         isShare: false,
@@ -119,6 +125,7 @@ Component({
                 TabCur: e.currentTarget.dataset.id,
                 scrollLeft: (e.currentTarget.dataset.id - 1) * 60,
                 page: 1,
+                fix: false,
                 topNum: 0
             })
             app.wxApi.showLoading()
@@ -152,9 +159,23 @@ Component({
             let data = {
                 page: that.data.page,
             }
+            that.setData({
+                isMore: true
+            })
             app.apimanager.getRequest(url, data).then(res => {
                 app.wxApi.hideLoading();
+                if (that.data.triggered == false) {
+                    that.setData({
+                        isMore: false
+                    })
+                } else {
+                    that.setData({
+                        isMore: false,
+                        triggered: false
+                    })
+                }
                 // wx.stopPullDownRefresh()
+
                 // 请求到的帖子列表
                 let datalist = res.Variables.data ? res.Variables.data : []
 
@@ -242,6 +263,17 @@ Component({
                 current: imageSrcArray[e.currentTarget.id],
                 urls: imageSrcArray
             })
+        },
+
+        // 下拉刷新
+        refresh() {
+            let that = this
+            app.wxApi.showLoading()
+            that.setData({
+                triggered: true
+            })
+            that.getListData()
+
         },
 
         // 触底加载更多

@@ -1,6 +1,7 @@
 <search bgColor="bg-white" msg="搜索"></search>
 
-<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" bindscroll="bindScroll" bindscrolltolower="loadMore" style="height: {{screenHeight - customBar}}px;">
+<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" bindscroll="bindScroll" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refresh" refresher-triggered="{{triggered}}"
+    style="height: {{screenHeight - customBar}}px;">
 
     <!-- 功能区开始 -->
     <view class="grid col-2 padding-sm">
@@ -94,7 +95,10 @@
         <!-- 帖子结束 -->
     </view>
     <!-- 帖子列表结束 -->
-
+    <!-- 显示更多/已经到底 开始 -->
+    <view wx:if="{{isMore}}" class="text-center text-gray margin-tb-sm">显示更多……</view>
+    <view wx:else class="text-center text-gray margin-tb-sm">-没有更多了-</view>
+    <!-- 显示更多/已经到底 结束 -->
     <!-- 空白的tabbar栏高度开始 -->
     <view class='cu-tabbar-height'></view>
     <!-- 空白的tabbar栏高度结束 -->
@@ -114,9 +118,9 @@
                 </view>
                 <view class="cu-item" catchtap="sharePost" data-items="测试">
                     <button class="shareBtn" open-type="share" data-shareInfo="{{shareInfo}}">
-                    <view class="cuIcon-weixin text-gray">
-                    </view>
-                    <text>微信分享</text>
+                        <view class="cuIcon-weixin text-gray">
+                        </view>
+                        <text>微信分享</text>
                     </button>
                 </view>
             </view>
