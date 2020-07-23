@@ -255,7 +255,6 @@ Component({
         // 显示模态框
         showModal(e) {
             let that = this
-            console.log(e)
             that.setData({
                 isShare: true,
                 shareInfo: {

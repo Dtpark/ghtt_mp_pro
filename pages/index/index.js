@@ -14,7 +14,7 @@ Page({
     onShareAppMessage(res) {
         // console.log('12345')
         console.log(res)
-        let shareInfo = res.target.dataset.shareinfo
+        let shareInfo = (res.target != undefined) ? res.target.dataset.shareinfo : { title: "欢迎使用观海听涛校园助手" }
         return {
             title: shareInfo.title,
             path: shareInfo.path

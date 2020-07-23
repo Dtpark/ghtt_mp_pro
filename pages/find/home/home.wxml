@@ -66,7 +66,7 @@
                 <text class="cu-tag bg-red" wx:if="{{cellItem.special==4}}">活动</text>
                 <text class="cu-tag bg-cyan" wx:if="{{cellItem.special==5}}">辩论</text>
                 <!-- 主题类别结束 -->
-                {{cellItem.subject}}
+                <text selectab="true">{{cellItem.subject}}</text>
                 <!-- <text class="text-cut text-gray text-df">{{cellItem.message}}</text> -->
             </view>
 
