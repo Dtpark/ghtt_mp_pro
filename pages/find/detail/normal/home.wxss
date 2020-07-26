@@ -7,16 +7,12 @@
 
 /* 引用开始 */
 
-.quote {
+
+/* .quote {
     padding: 30rpx;
     background-color: var(--greyLight);
-    /* background-color: var(--darkGray); */
     border-radius: 6rpx;
-}
-
-.wxParse-blockquote {
-    background: var(--greyLight);
-}
+} */
 
 ._blockquote .quote {
     /* background-color: var(--greyLight)!important; */
@@ -25,3 +21,40 @@
 
 
 /* 引用结束 */
+
+
+/* 底部栏开始 */
+
+
+/* 底部栏结束 */
+
+
+/* 评论开始 */
+
+.comment_hd {
+    font-size: 36rpx!important;
+}
+
+.cu-form-group .title {
+    min-width: calc(4em + 30rpx);
+}
+
+
+/* 评论结束 */
+
+
+/* 底部模态框开始 */
+
+.shareBtn {
+    /* width: auto; */
+    line-height: initial;
+    padding: 0;
+    background-color: initial;
+}
+
+.shareBtn::after {
+    border: none;
+}
+
+
+/* 底部模态框结束 */

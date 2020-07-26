@@ -3,6 +3,10 @@ const app = getApp()
 const detailUrl = require('../../../../config/config').detailUrl
 const userAvatar = require('../../../../config/config').userAvatar
 const baseUrl = require('../../../../config/config').baseUrl
+const collectUrl = require('../../../../config/config').collectUrl
+const unCollectUrl = require('../../../../config/config').unCollectUrl
+const sendFlowerUrl = require('../../../../config/config').sendFlowerUrl
+const detailPath = require('../../../../utils/path').default.detailPath
 Page({
 
     /**
@@ -44,7 +48,10 @@ Page({
 
         // 回帖列表展示顺序
         picker: ['默认顺序', '按时间'],
-        index: 0
+        index: 0,
+
+        // 显示/隐藏 分享框
+        isShare: false
 
     },
 
@@ -56,9 +63,11 @@ Page({
 
         // 获取主题id
         let tid = options.tid;
+        // 获取主题标题
+        let title = options.title;
+        app.wxApi.setNavigationBarTitle({ title: title })
+            // let tid = 9;
 
-        // 是否是圈子
-        // var is_quan = options.is_quan ? options.is_quan : false
         // 获取用户id
         let uid = app.globalData.uid
             // 获取回复等级？？？？？？
@@ -112,14 +121,18 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+        let that = this
+        that.refreshRequest()
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function() {
-
+        let that = this
+        if (that.data.hasMore) {
+            that.requestMore(true)
+        }
     },
 
     /**
@@ -150,12 +163,90 @@ Page({
         that.makeRequest(); // 重新调用请求获取下一页数据 或者刷新数据
     },
 
+
+    // 收藏/取消收藏
+    collectThread() {
+        let that = this
+        if (that.data.favorited == 1) { // 已收藏 取消收藏
+            that.unCollect()
+        } else { // 未收藏 去收藏
+            that.collect()
+        }
+    },
+
+    // 收藏主题
+    collect() {
+        let that = this
+        let formhash = app.globalData.formhash
+        let data = {
+            formhash: formhash,
+            id: that.data.tid
+        }
+        app.apimanager.getRequest(collectUrl, data)
+            .then(res => {
+                if (res.Message.messageval === "favorite_do_success") {
+                    that.setData({
+                        favorited: 1
+                    })
+                    that.resetCollectState()
+                } else {
+                    if (res.Message.messageval === "favorite_repeat") {
+                        that.resetCollectState()
+                    }
+                    app.wxApi.showToast({
+                        title: res.Message.messagestr,
+                        icon: 'none'
+                    })
+                }
+            })
+            .catch(res => {
+                app.wxApi.showToast({
+                    title: '出错了！',
+                    icon: 'none'
+                })
+            })
+    },
+
+    // 取消收藏
+    unCollect() {
+        let that = this
+        let url = unCollectUrl + "&id=" + that.data.tid + "&type=thread";
+        let formhash = app.globalData.formhash
+        let postData = {
+            formhash: formhash,
+            deletesubmit: true
+        }
+        app.apimanager.postRequest(url, postData)
+            .then(res => {
+                if (res.Message.messageval == "do_success") {
+                    that.setData({
+                        favorited: 0
+                    })
+                    that.resetCollectState()
+                } else {
+                    app.wxApi.showToast({
+                        title: res.Message.messagestr,
+                        icon: 'none'
+                    })
+                }
+            })
+            .catch(res => {
+                app.wxApi.showToast({
+                    title: '出错了！',
+                    icon: 'none'
+                })
+            })
+    },
+
+
+
     // 切换回帖排序
     PickerChange(e) {
         let that = this
         that.setData({
             index: e.detail.value
         })
+        that.makeRequest()
     },
 
 
@@ -350,4 +441,127 @@ Page({
             collecttext: collecttext,
         })
     },
+
+    // 点赞
+    sendFlower(e) {
+        let that = this
+        let index = parseInt(e.currentTarget.id)
+        let replyItem = that.data.datalist[index]
+
+        let formhash = app.globalData.formhash
+        let data = {
+                tid: that.data.tid,
+                pid: replyItem.pid,
+                hash: formhash
+            }
+            // 对主题进行点赞
+        if (index == 0) {
+            data['action'] = 'recommend'
+            data['do'] = 'add'
+        }
+
+        app.apimanager.getRequest(sendFlowerUrl, data)
+            .then(res => {
+                if (res.Message.messageval == "thread_poll_succeed") {
+                    replyItem.issupport = 1
+
+                    if (replyItem.postreview && replyItem.postreview.support) {
+                        replyItem.postreview.support = parseInt(replyItem.postreview.support) + 1;
+                    } else {
+                        let postreview = {
+                            support: 1
+                        };
+
+                        replyItem['postreview'] = postreview;
+                    }
+                    let param = {}
+                    let str = 'datalist[' + index + ']'
+                    param[str] = replyItem
+                    that.setData(param)
+
+                    // console.log(self.data.datalist);
+                } else if (res.Message.messageval == "recommend_succeed") {
+                    // 主题评价成功
+                    replyItem.issupport = 1
+                    let thread = that.data.thread
+
+                    if (thread.recommends && thread.recommend_add) {
+                        thread.recommend_add = parseInt(thread.recommend_add) + 1;
+                    } else {
+                        let recommend_add = 1
+
+                        thread['recommend_add'] = recommend_add;
+                    }
+                    let param = {}
+                    param["thread"] = thread
+                    that.setData(param)
+
+                } else {
+                    if (this.data.repliesrank == '0' && res.Message.messageval == "to_login") {
+                        app.wxApi.showToast({
+                            title: '该功能暂未开启',
+                            icon: 'none'
+                        })
+                    } else {
+                        app.wxApi.showToast({
+                            title: res.Message.messagestr,
+                            icon: 'none'
+                        })
+                    }
+                }
+            })
+            .catch(res => {
+                app.wxApi.showToast({
+                    title: '出错了',
+                    icon: 'none'
+                })
+            })
+    },
+    // 主题点赞
+    // mod: misc
+    // action: recommend
+    // do :add
+    // tid: 9
+    // hash: 1 d51af2f
+    // ajaxmenu: 1
+    // inajax: 1
+    // ajaxtarget: recommend_add_menu_content
+
+    // 回复点赞
+    // mod: misc
+    // action: postreview
+    // do :support
+    // tid: 9
+    // pid: 23
+    // hash: 1 d51af2f
+    // ajaxmenu: 1
+    // inajax: 1
+    // ajaxtarget: _menu_content
+
+    // 显示模态框
+    showModal() {
+        let that = this
+        that.setData({
+            isShare: true,
+            // shareInfo: {
+            //     title: e.currentTarget.dataset.title,
+            //     path: detailPath + '?tid=' + e.currentTarget.dataset.tid
+            // }
+        })
+
+    },
+
+    // 隐藏模态框
+    hideModal() {
+        let that = this
+        that.setData({
+            isShare: false
+        })
+    },
+
+    // 生成海报
+    createPic() {
+        console.log('生成海报')
+        app.wxApi.showToast({ title: "尚未开发，敬请期待", icon: 'none' })
+    }
 })

@@ -1,7 +1,7 @@
 <search bgColor="bg-white" msg="搜索"></search>
 
-<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" bindscroll="bindScroll" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refresh" refresher-triggered="{{triggered}}"
-    style="height: {{screenHeight - customBar}}px;">
+<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" lower-threshold="-50" bindscroll="bindScroll" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refresh"
+    refresher-triggered="{{triggered}}" style="height: {{screenHeight - customBar}}px;">
 
     <!-- 功能区开始 -->
     <view class="grid col-2 padding-sm">
@@ -83,7 +83,7 @@
             </view>
             <!-- 附件结束 -->
             <view class="text-gray text-sm flex padding text-df">
-                <view class="flex-sub text-left"><text class="cuIcon-appreciatefill margin-lr-xs"></text>赞 {{cellItem.recommend_add}}
+                <view class="flex-sub text-left" catchtap="sendFlower" id="{{cellIdx}}"><text class="cuIcon-appreciatefill margin-lr-xs"></text>赞 {{cellItem.recommend_add}}
                 </view>
                 <view class="flex-sub text-center"><text class="flex-sub cuIcon-messagefill margin-lr-xs"></text>评论 {{cellItem.replies}}
                 </view>

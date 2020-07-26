@@ -6,6 +6,7 @@ const newestUrl = require('../../../config/config').newestUrl
 const hotUrl = require('../../../config/config').hotUrl
 const digestUrl = require('../../../config/config').digestUrl
 const userAvatar = require('../../../config/config').userAvatar
+const sendFlowerUrl = require('../../../config/config').sendFlowerUrl
 const detailPath = require('../../../utils/path').default.forumDetlPath
 Component({
     options: {
@@ -297,7 +298,8 @@ Component({
             // 特殊主体
             let special = item.special
             let tid = item.tid
-            console.log(special)
+            let title = item.subject
+                // console.log(special)
             let url = detailPath + '?tid='
                 // if (special == 1) {
                 //     url = '../questionnaire_detail/questionnaire_detail?tid='
@@ -310,9 +312,88 @@ Component({
                 app.wxApi.showToast({ title: '特殊帖子详情页暂未开发', icon: 'none' })
                 return false
             }
-            url += tid
+            url += tid + '&title=' + title
             app.wxApi.navigateTo(url)
         },
+
+
+        // 点赞
+        sendFlower(e) {
+            let that = this
+            let index = e.currentTarget.id
+            let replyItem = that.data.datalist[index]
+            let tid = replyItem.tid
+
+            // console.log(replyItem)
+            // return
+
+            let formhash = app.globalData.formhash
+            let data = {
+                tid: tid,
+                hash: formhash,
+                action: 'recommend',
+                do: 'add'
+            }
+
+            app.apimanager.getRequest(sendFlowerUrl, data)
+                .then(res => {
+                    if (res.Message.messageval == "thread_poll_succeed") {
+                        // 回复点赞成功
+                        replyItem.issupport = 1
+
+                        if (replyItem.postreview && replyItem.postreview.support) {
+                            replyItem.postreview.support = parseInt(replyItem.postreview.support) + 1;
+                        } else {
+                            let postreview = {
+                                support: 1
+                            };
+
+                            replyItem['postreview'] = postreview;
+                        }
+                        let param = {}
+                        let str = 'datalist[' + index + ']'
+                        param[str] = replyItem
+                        that.setData(param)
+
+                        // console.log(self.data.datalist);
+                    } else if (res.Message.messageval == "recommend_succeed") {
+                        // 主题评价成功
+                        replyItem.issupport = 1
+
+                        if (replyItem.recommends && replyItem.recommend_add) {
+                            replyItem.recommend_add = parseInt(replyItem.recommend_add) + 1;
+                        } else {
+                            let recommend_add = 1
+
+                            replyItem['recommend_add'] = recommend_add;
+                        }
+                        let param = {}
+                        let str = 'datalist[' + index + ']'
+                        param[str] = replyItem
+                        that.setData(param)
+
+                    } else {
+                        if (this.data.repliesrank == '0' && res.Message.messageval == "to_login") {
+                            app.wxApi.showToast({
+                                title: '该功能暂未开启',
+                                icon: 'none'
+                            })
+                        } else {
+                            app.wxApi.showToast({
+                                title: res.Message.messagestr,
+                                icon: 'none'
+                            })
+                        }
+                    }
+                })
+                .catch(res => {
+                    app.wxApi.showToast({
+                        title: '出错了',
+                        icon: 'none'
+                    })
+                })
+        },
+
 
         // 显示模态框
         showModal(e) {

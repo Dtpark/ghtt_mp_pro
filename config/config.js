@@ -47,9 +47,9 @@ const config = {
     postActivity: `${dzApiUrl}module=newactivity&version=4`,
     activitySinupListUrl: `${dzApiUrl}module=forummisc&action=activityapplylist&version=5`,
     activityAppliesUrl: `${dzApiUrl}module=activityapplies&version=5`,
-    // 精华主题
+    // 本周精华
     digestUrl: `${indexUrl}module=forumguide&view=digest&version=5`,
-    // 热门主题
+    // 本周热门
     hotUrl: `${indexUrl}module=forumguide&view=hot&version=5`,
     // 最新回复
     newrepUrl: `${indexUrl}module=forumguide&view=new&version=5`,
@@ -58,6 +58,7 @@ const config = {
     commonLoginUrl: `${dzApiUrl}module=login&version=5&type=minapp`,
     seccodeUrl: `${dzApiUrl}module=secure&version=4`,
     codeImageUrl: `${dzApiUrl}module=seccode&version=5`,
+    // 用户注册
     registerUrl: `${dzApiUrl}module=register&version=5&type=minapp`,
     oauthsUrl: `${dzApiUrl}module=oauths&version=5`,
     unBindThirdUrl: `${dzApiUrl}module=oauths&op=unbind&version=5`,
@@ -72,8 +73,11 @@ const config = {
     postReplyUrl: `${dzApiUrl}module=sendreply&replysubmit=yes&version=4`,
     replyWorkUrl: `${dzApiUrl}module=sendreply&comment=yes&commentsubmit=yes&version=4`,
     uploadFileUrl: `${dzApiUrl}module=forumupload&simple=1&version=4`,
+    // 收藏
     collectUrl: `${dzApiUrl}module=favthread&version=1`,
+    // 取消收藏
     unCollectUrl: `${dzApiUrl}module=favorite&version=5&op=delete`,
+    // 支持（点赞）
     sendFlowerUrl: `${dzApiUrl}module=support&version=5`,
     myFavoriteUrl: `${dzApiUrl}module=myfavthread&version=1`,
     myWorkUrl: `${dzApiUrl}module=mythread&version=1`,

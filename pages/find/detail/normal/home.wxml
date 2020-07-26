@@ -42,14 +42,13 @@
             <!-- 图片附件结束 -->
         </view>
         <!-- 附件结束 -->
-        <!-- 附件结束 -->
 
         <!-- 点赞开始 -->
         <!-- 点赞结束 -->
         <!-- 底部开始 -->
         <view class="text-gray text-df flex padding">
             <view class="flex-sub text-left"><text></text>阅读 {{thread.views}}</view>
-            <view class="flex-sub text-right"><text class="cuIcon-favor"> {{collecttext}}</text></view>
+            <view class="flex-sub text-right" bindtap="collectThread"><text class="{{favorited?'cuIcon-favorfill':'cuIcon-favor'}}"> {{collecttext}}</text></view>
         </view>
         <!-- 底部结束 -->
     </view>
@@ -73,7 +72,7 @@
     <!-- 回复导航栏结束 -->
 
     <!-- 回复列表开始 -->
-    <view class="cu-item shadow solids-bottom" wx:for="{{datalist}}" wx:key="item.pid" wx:if="{{index != 0}}" bindtap='cellClick'>
+    <view class="cu-item shadow solids-bottom" wx:for="{{datalist}}" wx:key="pid" wx:if="{{index != 0}}" bindtap='cellClick'>
         <!-- 层主信息开始 -->
         <view class="cu-list menu-avatar">
             <view class="cu-item">
@@ -108,7 +107,7 @@
 
         <!-- 底部开始 -->
         <view class="text-gray text-df text-right padding">
-            <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{item.postreview.support?item.postreview.support:0}}
+            <text class="cuIcon-appreciatefill margin-lr-xs" catchtap='sendFlower' id="{{index}}"></text>{{item.postreview.support?item.postreview.support:0}}
             <text class="cuIcon-messagefill margin-lr-xs"></text>回复
         </view>
         <!-- 底部结束 -->
@@ -120,12 +119,40 @@
 <view class='cu-tabbar-height'></view>
 <!-- 空白的tabbar栏高度结束 -->
 <view class="cu-bar input shadow foot padding-tb-sm">
-    <!-- <button class="solid-bottom" placeholder="写评论……" focus="{{false}}" maxlength="300" cursor-spacing="10"></button> -->
+    <input bindtap="showComment" class="solid-bottom" placeholder="写评论……" focus="{{false}}" maxlength="300" cursor-spacing="10" disabled></input>
     <!-- <button class="solid-bottom" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</button> -->
-    <view class="solid-bottom action" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</view>
+    <!-- <view class="solid-bottom action" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</view> -->
     <view class="action">
-        <text class="cuIcon-appreciate text-grey"></text>
-        <text class="cuIcon-forward text-grey"></text>
+        <text class="cuIcon-appreciate text-grey" catchtap='sendFlower' id="0"> {{thread.recommend_add < 99 ? thread.recommend_add : '99+'}}</text>
+        <text class="cuIcon-forward text-grey" catchtap="showModal"></text>
     </view>
     <!-- <button class="cu-btn bg-green shadow-blur">发送</button> -->
 </view>
+
+<!-- 底部模态框（分享）开始 -->
+<view class="cu-modal bottom-modal {{isShare?'show':''}}" bindtap="hideModal">
+    <view class="cu-dialog">
+        <view class="padding-bottom-xs bg-gray">
+            <!-- 内容开始 -->
+            <view class="cu-list grid col-2 no-border">
+                <view class="cu-item" catchtap="createPic">
+                    <view class="cuIcon-pic text-gray">
+                    </view>
+                    <text>生成海报</text>
+                </view>
+                <view class="cu-item" catchtap="sharePost" data-items="测试">
+                    <button class="shareBtn" open-type="share" data-shareInfo="{{shareInfo}}">
+                        <view class="cuIcon-weixin text-gray">
+                        </view>
+                        <text>微信分享</text>
+                    </button>
+                </view>
+            </view>
+            <!-- 内容结束 -->
+        </view>
+        <view class="cu-bar bg-white justify-center ">
+            <view class="action" bindtap="hideModal">取消</view>
+        </view>
+    </view>
+</view>
+<!-- 底部模态框（分享）结束 -->

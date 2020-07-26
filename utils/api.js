@@ -95,6 +95,11 @@ class wxAPIManager {
         return this.promisify('previewImage', params)
     }
 
+    // 设置标题栏文字
+    setNavigationBarTitle(params = { title: '' }) {
+        return this.promisify('setNavigationBarTitle', params)
+    }
+
 
 
 }
