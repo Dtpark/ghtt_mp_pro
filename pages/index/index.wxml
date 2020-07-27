@@ -2,7 +2,7 @@
 <home wx:if="{{PageCur=='home'}}"></home>
 <!-- <apps wx:if="{{PageCur=='apps'}}"></apps> -->
 <find wx:if="{{PageCur=='find'}}"></find>
-<!-- <plugin wx:if="{{PageCur=='plugin'}}"></plugin> -->
+<message wx:if="{{PageCur=='message'}}"></message>
 <mine wx:if="{{PageCur=='mine'}}"></mine>
 <!-- tabbar页面结束 -->
 
@@ -26,12 +26,12 @@
         </view>
         <view class="{{PageCur=='find'?'text-blue':'text-gray'}}">发现</view>
     </view>
-    <!-- <view class="action" bindtap="NavChange" data-cur="about">
-    <view class='cuIcon-cu-image'>
-      <image src="/images/tabbar/about{{PageCur=='about'?'_cur':''}}.png"></image>
+    <view class="action" bindtap="NavChange" data-cur="message">
+        <view class='cuIcon-cu-image'>
+            <image src="/static/images/tabbar/message{{PageCur=='message'?'_cur':''}}.png"></image>
+        </view>
+        <view class="{{PageCur=='message'?'text-blue':'text-gray'}}">消息</view>
     </view>
-    <view class="{{PageCur=='about'?'text-green':'text-gray'}}">消息</view>
-  </view> -->
     <view class="action" bindtap="NavChange" data-cur="mine">
         <view class='cuIcon-cu-image'>
             <image src="/static/images/tabbar/mine{{PageCur=='mine'?'_cur':''}}.png"></image>

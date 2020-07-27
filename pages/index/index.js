@@ -4,7 +4,7 @@ const { threadTypeUrl } = require("../../config/config")
 Page({
     data: {
         // 当前页面
-        PageCur: 'find',
+        PageCur: 'message',
     },
     NavChange(e) {
         this.setData({

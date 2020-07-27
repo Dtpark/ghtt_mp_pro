@@ -4,6 +4,7 @@
         "home": "/pages/home/home/home",
         "apps": "/pages/apps/home/home",
         "find": "/pages/find/home/home",
+        "message": "/pages/message/home/home",
         "mine": "/pages/mine/home/home"
     }
 }

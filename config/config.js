@@ -108,6 +108,24 @@ const config = {
     deleteSelfPostUrl: `${dzApiUrl}module=deleteselfpost&version=5`,
     commentMoreUrl: `${dzApiUrl}module=viewcomment&version=5`,
 
+    // 消息列表
+    // page: 第几页
+    // filter:privatepm
+    myPmUrl: `${dzApiUrl}module=mypm&version=5&mapifrom=ios`,
+    // 发送私信(post发送)
+    // formhash: 哈希值
+    // message: 消息内容
+    // username: 接收方昵称
+    sendPmUrl: `${dzApiUrl}module=sendpm&pmsubmit=yes&version=5`,
+
+    // 系统消息
+    systemUrl: `${dzApiUrl}module=mynotelist&view=system&version=3`,
+    // 回复消息(post发送)
+    // page: 第几页
+    // type: post:回复我的; at:艾特我的;
+    mypostUrl: `${dzApiUrl}?module=mynotelist&view=mypost&version=3`,
+
+
     tokenUrl: `${apiUrl}v1/open/token`,
     userInfoUrl: `${apiUrl}v1/user`
 }
