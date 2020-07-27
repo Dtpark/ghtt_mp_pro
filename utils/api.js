@@ -100,6 +100,11 @@ class wxAPIManager {
         return this.promisify('setNavigationBarTitle', params)
     }
 
+    // 停止下拉刷新
+    stopPullDownRefresh() {
+        return this.promisify('stopPullDownRefresh')
+    }
+
 
 
 }

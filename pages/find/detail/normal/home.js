@@ -272,7 +272,7 @@ Page({
         app.apimanager.getRequest(detailUrl, getDic)
             .then(res => {
                 app.wxApi.hideLoading();
-                // wx.stopPullDownRefresh();
+                app.wxApi.stopPullDownRefresh();
                 let threads = res.Variables.thread;
                 that.data.fid = threads.fid
                 let nickname = res.Variables.member_nickname ? res.Variables.member_nickname : res.Variables.member_username
@@ -415,7 +415,7 @@ Page({
                 })
             })
             .catch(res => {
-                // wx.stopPullDownRefresh()
+                app.wxApi.stopPullDownRefresh()
                 console.log(res)
                 app.wxApi.hideLoading();
                 that.setData({
@@ -491,6 +491,7 @@ Page({
                         let recommend_add = 1
 
                         thread['recommend_add'] = recommend_add;
+                        thread['recommend'] = 1;
                     }
                     let param = {}
                     param["thread"] = thread

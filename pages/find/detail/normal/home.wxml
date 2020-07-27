@@ -48,7 +48,7 @@
         <!-- 底部开始 -->
         <view class="text-gray text-df flex padding">
             <view class="flex-sub text-left"><text></text>阅读 {{thread.views}}</view>
-            <view class="flex-sub text-right" bindtap="collectThread"><text class="{{favorited?'cuIcon-favorfill':'cuIcon-favor'}}"> {{collecttext}}</text></view>
+            <view class="flex-sub text-right" bindtap="collectThread"><text class="{{favorited == 1 ?'cuIcon-favorfill':'cuIcon-favor'}}"> {{collecttext}}</text></view>
         </view>
         <!-- 底部结束 -->
     </view>
@@ -72,7 +72,7 @@
     <!-- 回复导航栏结束 -->
 
     <!-- 回复列表开始 -->
-    <view class="cu-item shadow solids-bottom" wx:for="{{datalist}}" wx:key="pid" wx:if="{{index != 0}}" bindtap='cellClick'>
+    <view class="cu-item shadow solids-bottom" wx:for="{{datalist}}" wx:key="pid" wx:if="{{index != 0}}">
         <!-- 层主信息开始 -->
         <view class="cu-list menu-avatar">
             <view class="cu-item">
@@ -107,7 +107,7 @@
 
         <!-- 底部开始 -->
         <view class="text-gray text-df text-right padding">
-            <text class="cuIcon-appreciatefill margin-lr-xs" catchtap='sendFlower' id="{{index}}"></text>{{item.postreview.support?item.postreview.support:0}}
+            <text class="margin-lr-xs cuIcon-appreciatefill" catchtap="sendFlower" id="{{index}}" decode="true">&nbsp;{{item.postreview.support?item.postreview.support:0}}</text>
             <text class="cuIcon-messagefill margin-lr-xs"></text>回复
         </view>
         <!-- 底部结束 -->
@@ -123,7 +123,7 @@
     <!-- <button class="solid-bottom" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</button> -->
     <!-- <view class="solid-bottom action" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</view> -->
     <view class="action">
-        <text class="cuIcon-appreciate text-grey" catchtap='sendFlower' id="0"> {{thread.recommend_add < 99 ? thread.recommend_add : '99+'}}</text>
+        <text class=" text-grey {{thread.recommend == 1?'cuIcon-appreciatefill':'cuIcon-appreciate'}}" catchtap='sendFlower' id="0"> {{thread.recommend_add < 99 ? thread.recommend_add : '99+'}}</text>
         <text class="cuIcon-forward text-grey" catchtap="showModal"></text>
     </view>
     <!-- <button class="cu-btn bg-green shadow-blur">发送</button> -->
