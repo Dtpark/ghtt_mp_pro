@@ -105,6 +105,7 @@ Component({
         credits: '-',
 
         field4: '',
+        // 用户组（含颜色的标签）
         grouptitle: ''
     },
 
@@ -134,7 +135,7 @@ Component({
                         let posts = res.Variables.space.posts
                         let credits = res.Variables.space.credits
                         let field4 = res.Variables.space.field4
-                        let grouptitle = res.Variables.space.group.grouptitle
+                        let grouptitle = res.Variables.space.group.grouptitle.replace(/<\/?font[^>]*>/gi, '')
 
                         that.setData({
                             username: username,

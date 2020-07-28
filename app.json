@@ -1,8 +1,6 @@
 {
     "pages": [
 
-
-
         "pages/index/index",
         "pages/logs/logs",
         "pages/home/home/home",
@@ -10,7 +8,8 @@
         "pages/mine/login/home",
         "pages/mine/setting/home",
         "pages/mine/register/home",
-        "pages/find/detail/normal/home"
+        "pages/find/detail/normal/home",
+        "pages/message/chat/home"
 
     ],
     "window": {

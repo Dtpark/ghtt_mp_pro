@@ -112,6 +112,12 @@ const config = {
     // page: 第几页
     // filter:privatepm
     myPmUrl: `${dzApiUrl}module=mypm&version=5&mapifrom=ios`,
+
+    // 获取会话详情(post获取)
+    // page: 第几页（从0开始）
+    // touid：和谁的会话
+    pmDetailUrl: `${dzApiUrl}module=mypm&subop=view&version=5&checkavatar=1&mapifrom=ios&smiley=no&convimg=1`,
+
     // 发送私信(post发送)
     // formhash: 哈希值
     // message: 消息内容
@@ -123,7 +129,7 @@ const config = {
     // 回复消息(post发送)
     // page: 第几页
     // type: post:回复我的; at:艾特我的;
-    mypostUrl: `${dzApiUrl}?module=mynotelist&view=mypost&version=3`,
+    mypostUrl: `${dzApiUrl}module=mynotelist&view=mypost&version=3`,
 
 
     tokenUrl: `${apiUrl}v1/open/token`,

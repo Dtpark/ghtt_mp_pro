@@ -17,6 +17,7 @@ App({
                 that.globalData.regname = res.regname
                 that.globalData.repliesrank = res.setting.repliesrank
                 that.globalData.allowpostcomment = res.setting.allowpostcomment
+                that.globalData.formhash = res.formhash
             })
     },
 
@@ -124,6 +125,9 @@ App({
         repliesrank: '',
         // 允许评论？？？
         allowpostcomment: {},
+
+        // 表单哈希值
+        formhash: '',
 
         // 用户id（用户判断登录态）
         uid: '',

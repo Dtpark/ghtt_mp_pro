@@ -3,22 +3,38 @@
 </cu-custom>
 
 <!-- 消息类别开始 -->
-<view class="cu-list grid col-3 no-border margin-tb-sm">
-    <view class="cu-item" wx:for="{{iconList}}" wx:key="index" wx:if="{{index<3*1}}">
+<view class="cu-list grid col-2 no-border margin-tb-sm">
+    <view class="cu-item">
+        <view class="cuIcon-comment text-red">
+            <view class="cu-tag badge" wx:if="{{notice.newmypost != 0}}">
+                <block wx:if="{{notice.newmypost!=1}}">{{notice.newmypost>99?"99+":notice.newmypost}}</block>
+            </view>
+        </view>
+        <text>我的帖子</text>
+    </view>
+    <view class="cu-item">
+        <view class="cuIcon-loading text-orange">
+            <view class="cu-tag badge" wx:if="{{notice.prompt!=0}}">
+                <block wx:if="{{notice.prompt!=1}}">{{notice.prompt>99?"99+":notice.prompt}}</block>
+            </view>
+        </view>
+        <text>系统消息</text>
+    </view>
+    <!-- <view class="cu-item" wx:for="{{iconList}}" wx:key="index" wx:if="{{index<3*1}}">
         <view class="cuIcon-{{item.icon}} text-{{item.color}}">
             <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
                 <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
             </view>
         </view>
         <text>{{item.name}}</text>
-    </view>
+    </view> -->
 </view>
 <!-- 消息类别结束 -->
 
 <!-- 私信开始 -->
 <view class="cu-list menu-avatar">
     <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="item" wx:key="list">
-        <view class="cu-item" bindtap="toDetail" data-touid="{{ item.touid }}">
+        <view class="cu-item" bindtap="toDetail" data-touid="{{ item.touid }}" data-username="{{item.tousername}}">
             <view class="cu-avatar radius lg" style="background-image:url({{item.toavatar}});"></view>
             <view class="content">
                 <view class="text-grey">{{ item.tousername }}</view>
@@ -28,7 +44,7 @@
                 </view>
             </view>
             <view class="action">
-                <view class="text-grey text-xs">{{ item.vdateline }}</view>
+                <view class="text-grey text-xs"><text decode="true">{{ item.vdateline }}</text></view>
                 <view wx-if="{{ item.isnew == 1 }}" class="cu-tag round bg-red sm"></view>
             </view>
         </view>

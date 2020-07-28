@@ -1,6 +1,7 @@
 // pages/message/home/home.js
 const app = getApp()
 const myPmUrl = require('../../../config/config').myPmUrl
+const chatDetailPath = require('../../../utils/path').default.chatDetailPath
 Component({
     options: {
         addGlobalClass: true,
@@ -46,25 +47,6 @@ Component({
      * 组件的初始数据
      */
     data: {
-
-        // 消息分类
-        iconList: [{
-            icon: 'comment',
-            color: 'red',
-            badge: 120,
-            name: '回复我的'
-        }, {
-            icon: 'loading',
-            color: 'orange',
-            badge: 1,
-            name: '提到我的'
-        }, {
-            icon: 'notice',
-            color: 'yellow',
-            badge: 0,
-            name: '系统提醒'
-        }],
-
         // 会话列表
         list: [],
         // 会话数目
@@ -72,7 +54,10 @@ Component({
         // 消息类型(私信)
         filter: 'privatepm',
         // 第几页
-        page: 1
+        page: 1,
+
+        // 通知信息
+        notice: []
     },
 
     /**
@@ -113,7 +98,8 @@ Component({
                     if (res.Variables.count != 0) {
                         that.setData({
                             list: res.Variables.list,
-                            count: res.Variables.count
+                            count: res.Variables.count,
+                            notice: res.Variables.notice
                         })
                     }
                 })
@@ -122,6 +108,16 @@ Component({
                     app.wxApi.stopPullDownRefresh();
                     console.log(e)
                 })
+
+        },
+
+        // 进入对话框详情
+        toDetail(e) {
+            console.log(e)
+            let touid = e.currentTarget.dataset.touid
+            let username = e.currentTarget.dataset.username
+            let url = chatDetailPath + '?touid=' + touid + '&username=' + username
+            app.wxApi.navigateTo(url)
 
         }
 

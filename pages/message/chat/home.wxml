@@ -1,0 +1,44 @@
+<view>
+
+    <view class="cu-chat">
+        <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="item" wx:key="list">
+            <view wx:if="{{ item.authorid == uid }}" class="cu-item self">
+                <view class="main">
+                    <view class="content bg-green shadow">
+                        <text>{{ item.message }}</text>
+                        <!-- {{ item.message }} -->
+                    </view>
+                </view>
+                <view class="cu-avatar radius" style="background-image:url({{item.toavatar}});">
+                </view>
+                <view class="date"><text decode="true">{{ item.vdateline }}</text></view>
+            </view>
+
+            <view wx:else class="cu-item">
+                <view class="cu-avatar radius" style="background-image:url({{item.toavatar}});">
+                </view>
+                <view class="main">
+                    <view class="content shadow">
+                        <text>{{ item.message }}</text>
+                        <!-- {{ item.message }} -->
+                    </view>
+                </view>
+                <view class="date "><text decode="true">{{ item.vdateline }}</text></view>
+            </view>
+        </block>
+    </view>
+    <!-- 空白的tabbar栏高度开始 -->
+    <view class='cu-tabbar-height'></view>
+    <!-- 空白的tabbar栏高度结束 -->
+
+    <form catchsubmit="send">
+        <view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom: {{InputBottom}}px">
+            <view class="action">
+                <text class="cuIcon-emoji text-grey" bindtap="showEmoji"></text>
+            </view>
+            <textarea class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" adjust-position="{{false}}" focus="{{false}}" style="width: 70%; max-height: 200rpx; font-size: 40rpx;" auto-height="true" name="message"></textarea>
+            <button class="cu-btn bg-blue shadow" formType="submit">发送</button>
+        </view>
+    </form>
+
+</view>

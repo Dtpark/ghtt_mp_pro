@@ -12,10 +12,14 @@ const settingPath = '/pages/mine/setting/home'
 // 普通帖子详情页路径
 const forumDetlPath = '/pages/find/detail/normal/home'
 
+// 私信详情页路径
+const chatDetailPath = '/pages/message/chat/home'
+
 const path = {
     loginPath,
     settingPath,
     registerPath,
-    forumDetlPath
+    forumDetlPath,
+    chatDetailPath
 }
 export default path

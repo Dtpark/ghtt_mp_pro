@@ -4,15 +4,16 @@
 <!-- 个人信息 开始 -->
 <view wx:if="{{ uid }}" class="cu-list menu-avatar" bindtap="">
     <view class="cu-item">
-        <view class="cu-avatar round lg"
-            style="background-image:url('{{ avatar }}');"></view>
+        <view class="cu-avatar round lg" style="background-image:url('{{ avatar }}');"></view>
         <view class="content">
             <view class="text-black text-lg">
                 <text class="text-cut">{{username}}</text>
                 <!-- <view class="cu-tag round bg-orange sm">断开连接...</view> -->
             </view>
             <view class="text-gray text-sm flex">
-                <text class="text-cut"> uid:{{uid}}</text>
+                <!-- <text class="text-cut"> uid:{{uid}}</text> -->
+                <!-- <parser html="{{grouptitle}}"></parser> -->
+                <text class="cu-tag line-yellow">{{grouptitle}}</text>
             </view>
         </view>
         <view class="action">
@@ -25,8 +26,7 @@
 <!-- 登录 开始 -->
 <view wx:else class="cu-list menu-avatar" bindtap="toLogin">
     <view class="cu-item">
-        <view class="cu-avatar round lg"
-            style="background-image:url('{{ avatar }}');"></view>
+        <view class="cu-avatar round lg" style="background-image:url('{{ avatar }}');"></view>
         <view class="content">
             <view class="text-black text-lg">
                 <text class="text-cut">注册/登录</text>
