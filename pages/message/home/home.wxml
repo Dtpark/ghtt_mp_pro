@@ -12,10 +12,10 @@
         </view>
         <text>我的帖子</text>
     </view>
-    <view class="cu-item">
-        <view class="cuIcon-loading text-orange">
-            <view class="cu-tag badge" wx:if="{{notice.prompt!=0}}">
-                <block wx:if="{{notice.prompt!=1}}">{{notice.prompt>99?"99+":notice.prompt}}</block>
+    <view class="cu-item" bindtap="toSystem">
+        <view class="cuIcon-notice text-orange">
+            <view class="cu-tag badge" wx:if="{{notice.newprompt!=0}}">
+                <block wx:if="{{notice.newprompt!=1}}">{{notice.newprompt>99?"99+":notice.newprompt}}</block>
             </view>
         </view>
         <text>系统消息</text>

@@ -1,0 +1,19 @@
+<view class="cu-card dynamic">
+    <view class="cu-item margin-bottom-sm shadow" wx:for="{{list}}" wx:key="index">
+        <view class="cu-list menu-avatar">
+            <view class="cu-item">
+                <view class="cu-avatar round lg" style="background-image:url({{userAvatar}});">
+                </view>
+                <view class="content flex-sub">
+                    <view>{{item.author?item.author:'系统'}}</view>
+                    <!-- <view class="text-gray text-sm flex justify-between">
+                        2019年12月3日
+                    </view> -->
+                </view>
+            </view>
+        </view>
+        <view class="text-content">
+            <parser html="{{item.note}}"></parser>
+        </view>
+    </view>
+</view>

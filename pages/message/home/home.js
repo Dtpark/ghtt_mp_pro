@@ -2,6 +2,7 @@
 const app = getApp()
 const myPmUrl = require('../../../config/config').myPmUrl
 const chatDetailPath = require('../../../utils/path').default.chatDetailPath
+const systemPath = require('../../../utils/path').default.systemPath
 Component({
     options: {
         addGlobalClass: true,
@@ -111,9 +112,13 @@ Component({
 
         },
 
+        // 进入系统通知详情
+        toSystem() {
+            app.wxApi.navigateTo(systemPath)
+        },
+
         // 进入对话框详情
         toDetail(e) {
-            console.log(e)
             let touid = e.currentTarget.dataset.touid
             let username = e.currentTarget.dataset.username
             let url = chatDetailPath + '?touid=' + touid + '&username=' + username

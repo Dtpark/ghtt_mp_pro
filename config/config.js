@@ -125,6 +125,7 @@ const config = {
     sendPmUrl: `${dzApiUrl}module=sendpm&pmsubmit=yes&version=5`,
 
     // 系统消息
+    // page: 第几页
     systemUrl: `${dzApiUrl}module=mynotelist&view=system&version=3`,
     // 回复消息(post发送)
     // page: 第几页

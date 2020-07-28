@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "系统消息",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 150,
+    "usingComponents": {}
+}

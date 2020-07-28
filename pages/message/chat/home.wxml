@@ -36,7 +36,7 @@
             <view class="action">
                 <text class="cuIcon-emoji text-grey" bindtap="showEmoji"></text>
             </view>
-            <textarea class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" adjust-position="{{false}}" focus="{{false}}" style="width: 70%; max-height: 200rpx; font-size: 40rpx;" auto-height="true" name="message"></textarea>
+            <textarea class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" adjust-position="{{false}}" focus="{{false}}" style="width: 70%; max-height: 200rpx; font-size: 40rpx;" auto-height="true" name="message" value="{{messageValue}}"></textarea>
             <button class="cu-btn bg-blue shadow" formType="submit">发送</button>
         </view>
     </form>

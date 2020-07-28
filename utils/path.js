@@ -15,11 +15,15 @@ const forumDetlPath = '/pages/find/detail/normal/home'
 // 私信详情页路径
 const chatDetailPath = '/pages/message/chat/home'
 
+// 系统通知路径
+const systemPath = '/pages/message/system/home'
+
 const path = {
     loginPath,
     settingPath,
     registerPath,
     forumDetlPath,
-    chatDetailPath
+    chatDetailPath,
+    systemPath
 }
 export default path

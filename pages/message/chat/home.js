@@ -13,7 +13,8 @@ Page({
         touid: 0,
         username: '',
         uid: 0,
-        message: '',
+        messageValue: '',
+        // 第几页（0为当前页）
         page: 0
     },
 
@@ -161,8 +162,6 @@ Page({
     // 发送聊天信息     
     send(e) {
         let that = this;
-        console.log(e)
-            // return
         let message = e.detail.value.message
         if (message == '') {
             app.wxApi.showToast({ title: '发送内容不能未空', icon: 'none' })
@@ -176,12 +175,21 @@ Page({
         }
         app.apimanager.postRequest(sendPmUrl, data)
             .then(res => {
-                console.log(res)
                 if (res.Message.messageval == "do_success") {
                     // 发送成功
-                    // 1.将信息添加到列表中
-                    that.requestMore(false)
-                        // 2.清除文本框中的输入内容
+                    app.wxApi.showToast({ title: '发送成功' })
+                        .then(res => {
+                            app.wxApi.showLoading()
+                                .then(res => {
+                                    // 1.将信息添加到列表中
+                                    that.requestMore(false)
+                                        // 2.清除文本框中的输入内容
+                                    that.setData({
+                                        messageValue: ''
+                                    })
+                                })
+                        })
+
 
                 } else {
                     // 发送失败
