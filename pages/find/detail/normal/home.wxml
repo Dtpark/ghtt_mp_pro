@@ -95,10 +95,10 @@
         </view>
         <!-- 评论内容结束 -->
         <!-- 附件开始 -->
-        <view wx:if="{{datalist[0].attachments}}">
+        <view wx:if="{{datalist[index].attachments}}">
             <!-- 图片附件开始 -->
-            <view wx:if="{{datalist[0].imageA.length > 0}}" class="grid flex-sub padding-lr {{(datalist[0].imageA.length > 1)?'col-3 grid-square':'col-1'}}">
-                <view wx:for="{{datalist[0].imageA}}" wx:for-index="aidx" wx:for-item="image" wx:key="aid" class="bg-img {{(datalist[0].imageA.length > 1)?'':'only-img'}}" style="background-image:url({{image.newUrl}});">
+            <view wx:if="{{datalist[index].imageA.length > 0}}" class="grid flex-sub padding-lr {{(datalist[index].imageA.length > 1)?'col-3 grid-square':'col-1'}}">
+                <view wx:for="{{datalist[index].imageA}}" wx:for-index="aidx" wx:for-item="image" wx:key="aid" class="bg-img {{(datalist[index].imageA.length > 1)?'':'only-img'}}" style="background-image:url({{image.newUrl}});">
                 </view>
             </view>
             <!-- 图片附件结束 -->

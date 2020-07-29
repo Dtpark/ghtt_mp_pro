@@ -1,3 +1,17 @@
+<!-- 分类导航开始 -->
+<scroll-view scroll-x class="bg-white nav fixed">
+    <view class="flex text-center">
+        <view class="cu-item flex-sub {{index==TabCur?'text-blue cur':''}}" wx:for="{{navList}}" wx:for-item="item" wx:key="index" bindtap="tabSelect" data-id="{{index}}">
+            {{item.title}}
+        </view>
+    </view>
+</scroll-view>
+<!-- 分类导航结束 -->
+
+<!-- 空白的tabbar栏高度开始 -->
+<view class='cu-tabbar-height'></view>
+<!-- 空白的tabbar栏高度结束 -->
+
 <view class="cu-card dynamic">
     <view class="cu-item margin-bottom-sm shadow" wx:for="{{list}}" wx:key="index">
         <view class="cu-list menu-avatar">

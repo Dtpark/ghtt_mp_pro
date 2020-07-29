@@ -5,21 +5,21 @@
             <view wx:if="{{ item.authorid == uid }}" class="cu-item self">
                 <view class="main">
                     <view class="content bg-green shadow">
-                        <text>{{ item.message }}</text>
+                        <text decode="true">{{ item.message }}</text>
                         <!-- {{ item.message }} -->
                     </view>
                 </view>
-                <view class="cu-avatar radius" style="background-image:url({{item.toavatar}});">
+                <view class="cu-avatar radius" style="background-image:url({{item.fromavatar}});">
                 </view>
                 <view class="date"><text decode="true">{{ item.vdateline }}</text></view>
             </view>
 
             <view wx:else class="cu-item">
-                <view class="cu-avatar radius" style="background-image:url({{item.toavatar}});">
+                <view class="cu-avatar radius" style="background-image:url({{item.fromavatar}});">
                 </view>
                 <view class="main">
                     <view class="content shadow">
-                        <text>{{ item.message }}</text>
+                        <text decode="true">{{ item.message }}</text>
                         <!-- {{ item.message }} -->
                     </view>
                 </view>

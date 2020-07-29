@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "帖子消息",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 150,
+    "usingComponents": {}
+}

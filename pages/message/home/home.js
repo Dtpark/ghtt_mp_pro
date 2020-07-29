@@ -3,6 +3,7 @@ const app = getApp()
 const myPmUrl = require('../../../config/config').myPmUrl
 const chatDetailPath = require('../../../utils/path').default.chatDetailPath
 const systemPath = require('../../../utils/path').default.systemPath
+const myPostPath = require('../../../utils/path').default.myPostMsgPath
 Component({
     options: {
         addGlobalClass: true,
@@ -48,14 +49,37 @@ Component({
      * 组件的初始数据
      */
     data: {
+        // 屏幕信息
+        // 屏幕高度
+        screenHeight: app.globalData.ScreenHeight,
+        // 可用窗口高度
+        windowHeight: app.globalData.WindowHeight,
+        // 状态栏相关参数
+        // 状态栏高度
+        statusBar: app.globalData.StatusBar,
+        // 导航栏高度
+        customBar: app.globalData.CustomBar,
+
+        // 距离顶部距离
+        topNum: 0,
+
+        // 下拉刷新状态（是否在下拉刷新）
+        triggered: false,
+
+        // 是否在触底加载
+        isMore: false,
+
+
         // 会话列表
         list: [],
-        // 会话数目
+        // 会话总数目
         count: 0,
         // 消息类型(私信)
         filter: 'privatepm',
         // 第几页
         page: 1,
+        // 每页几条
+        perpage: 15,
 
         // 通知信息
         notice: []
@@ -65,6 +89,29 @@ Component({
      * 组件的方法列表
      */
     methods: {
+
+        // 下拉刷新
+        refresh() {
+            let that = this
+            app.wxApi.showLoading()
+            that.setData({
+                triggered: true
+            })
+            that.requestMore(false)
+
+        },
+
+        // 触底加载更多
+        loadMore() {
+            let that = this
+            app.wxApi.showLoading()
+            if (Math.ceil(that.data.count / that.data.perpage) >= that.data.page + 1) {
+                that.requestMore(true)
+            } else {
+                app.wxApi.hideLoading()
+            }
+
+        },
 
         // 请求更多
         requestMore(isMore = false) {
@@ -77,6 +124,7 @@ Component({
             }
             that.setData({
                 page: page, // 更新当前页数
+                isMore: true
             })
             that.getPmList(); // 重新调用请求获取下一页数据 或者刷新数据
         },
@@ -84,29 +132,39 @@ Component({
         // 获取消息列表
         getPmList() {
             let that = this
-
             let data = {
-                    page: that.data.page,
-                    filter: that.data.filter
-                }
-                // app.wxApiwx.hideLoading();
-                // app.wxApiwx.stopPullDownRefresh();
+                page: that.data.page,
+                filter: that.data.filter
+            }
             app.apimanager.postRequest(myPmUrl, data)
                 .then(res => {
                     app.wxApi.hideLoading();
-                    app.wxApi.stopPullDownRefresh();
-                    // console.log(res)
-                    if (res.Variables.count != 0) {
+                    if (that.data.triggered == false) {
                         that.setData({
-                            list: res.Variables.list,
-                            count: res.Variables.count,
-                            notice: res.Variables.notice
+                            isMore: false
+                        })
+                    } else {
+                        that.setData({
+                            isMore: false,
+                            triggered: false
                         })
                     }
+                    // if (Math.ceil(res.Variables.count / res.Variables.perpage) >= that.data.page) {
+                    let list = that.data.list.concat(res.Variables.list)
+                    that.setData({
+                            list: list,
+                            count: res.Variables.count,
+                            notice: res.Variables.notice,
+                            isMore: false
+                        })
+                        // } 
                 })
                 .catch(e => {
                     app.wxApi.hideLoading();
-                    app.wxApi.stopPullDownRefresh();
+                    that.setData({
+                        isMore: false,
+                        triggered: false
+                    })
                     console.log(e)
                 })
 
@@ -115,6 +173,11 @@ Component({
         // 进入系统通知详情
         toSystem() {
             app.wxApi.navigateTo(systemPath)
+        },
+
+        // 进入帖子通知详情
+        toMyPost() {
+            app.wxApi.navigateTo(myPostPath)
         },
 
         // 进入对话框详情

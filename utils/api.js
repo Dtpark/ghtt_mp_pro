@@ -105,6 +105,11 @@ class wxAPIManager {
         return this.promisify('stopPullDownRefresh')
     }
 
+    // 将页面滚动到目标位置，支持选择器和滚动距离两种方式定位
+    pageScrollTo(params = { scrollTop: 0, duration: 600 }) {
+        return this.promisify('pageScrollTo', params)
+    }
+
 
 
 }

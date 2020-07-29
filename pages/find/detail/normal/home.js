@@ -364,7 +364,8 @@ Page({
                     let DownloadA = [];
                     for (let aidKey in attachments) {
                         let attItem = attachments[aidKey]
-                        let newUrl = baseUrl + '/' + attItem.url + attItem.attachment
+                            // let newUrl = baseUrl + '/' + attItem.url + attItem.attachment
+                        let newUrl = attItem.url + attItem.attachment
                         attItem['newUrl'] = newUrl
                         if (attItem.isimage != 0) {
                             imageA.push(attItem)

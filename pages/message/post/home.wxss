@@ -1,0 +1,5 @@
+/* pages/message/post/home.wxss */
+
+.cu-card.dynamic>.cu-item>.text-content {
+    max-height: none;
+}

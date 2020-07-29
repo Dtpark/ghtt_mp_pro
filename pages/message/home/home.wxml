@@ -2,25 +2,28 @@
     <view slot="content">消息</view>
 </cu-custom>
 
-<!-- 消息类别开始 -->
-<view class="cu-list grid col-2 no-border margin-tb-sm">
-    <view class="cu-item">
-        <view class="cuIcon-comment text-red">
-            <view class="cu-tag badge" wx:if="{{notice.newmypost != 0}}">
-                <block wx:if="{{notice.newmypost!=1}}">{{notice.newmypost>99?"99+":notice.newmypost}}</block>
+<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" lower-threshold="150" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refresh" refresher-triggered="{{triggered}}"
+    style="height:{{screenHeight-customBar}}px;">
+
+    <!-- 消息类别开始 -->
+    <view class="cu-list grid col-2 no-border margin-tb-sm">
+        <view class="cu-item" bindtap="toMyPost">
+            <view class="cuIcon-comment text-red">
+                <view class="cu-tag badge" wx:if="{{notice.newmypost != 0}}">
+                    <block wx:if="{{notice.newmypost!=1}}">{{notice.newmypost>99?"99+":notice.newmypost}}</block>
+                </view>
             </view>
+            <text>帖子消息</text>
         </view>
-        <text>我的帖子</text>
-    </view>
-    <view class="cu-item" bindtap="toSystem">
-        <view class="cuIcon-notice text-orange">
-            <view class="cu-tag badge" wx:if="{{notice.newprompt!=0}}">
-                <block wx:if="{{notice.newprompt!=1}}">{{notice.newprompt>99?"99+":notice.newprompt}}</block>
+        <view class="cu-item" bindtap="toSystem">
+            <view class="cuIcon-notice text-orange">
+                <view class="cu-tag badge" wx:if="{{notice.newprompt!=0}}">
+                    <block wx:if="{{notice.newprompt!=1}}">{{notice.newprompt>99?"99+":notice.newprompt}}</block>
+                </view>
             </view>
+            <text>系统消息</text>
         </view>
-        <text>系统消息</text>
-    </view>
-    <!-- <view class="cu-item" wx:for="{{iconList}}" wx:key="index" wx:if="{{index<3*1}}">
+        <!-- <view class="cu-item" wx:for="{{iconList}}" wx:key="index" wx:if="{{index<3*1}}">
         <view class="cuIcon-{{item.icon}} text-{{item.color}}">
             <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
                 <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
@@ -28,26 +31,34 @@
         </view>
         <text>{{item.name}}</text>
     </view> -->
-</view>
-<!-- 消息类别结束 -->
+    </view>
+    <!-- 消息类别结束 -->
 
-<!-- 私信开始 -->
-<view class="cu-list menu-avatar">
-    <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="item" wx:key="list">
-        <view class="cu-item" bindtap="toDetail" data-touid="{{ item.touid }}" data-username="{{item.tousername}}">
-            <view class="cu-avatar radius lg" style="background-image:url({{item.toavatar}});"></view>
-            <view class="content">
-                <view class="text-grey">{{ item.tousername }}</view>
-                <view class="text-gray text-sm flex">
-                    <text class="text-cut">{{ item.message }}
-                    </text>
+    <!-- 私信开始 -->
+    <view class="cu-list menu-avatar">
+        <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="item" wx:key="list">
+            <view class="cu-item" bindtap="toDetail" data-touid="{{ item.touid }}" data-username="{{item.tousername}}">
+                <view class="cu-avatar radius lg" style="background-image:url({{item.toavatar}});"></view>
+                <view class="content">
+                    <view class="text-grey">{{ item.tousername }}</view>
+                    <view class="text-gray text-sm flex">
+                        <text class="text-cut" decode="true">{{ item.message }}
+                        </text>
+                    </view>
+                </view>
+                <view class="action">
+                    <view class="text-grey text-xs"><text decode="true">{{ item.vdateline }}</text></view>
+                    <view wx-if="{{ item.isnew == 1 }}" class="cu-tag round bg-red sm"></view>
                 </view>
             </view>
-            <view class="action">
-                <view class="text-grey text-xs"><text decode="true">{{ item.vdateline }}</text></view>
-                <view wx-if="{{ item.isnew == 1 }}" class="cu-tag round bg-red sm"></view>
-            </view>
-        </view>
-    </block>
-</view>
-<!-- 私信结束 -->
+        </block>
+    </view>
+    <!-- 私信结束 -->
+    <!-- 显示更多/已经到底 开始 -->
+    <view wx:if="{{isMore}}" class="text-center text-gray margin-tb-sm">显示更多……</view>
+    <view wx:else class="text-center text-gray margin-tb-sm">-没有更多了-</view>
+    <!-- 显示更多/已经到底 结束 -->
+    <!-- 空白的tabbar栏高度开始 -->
+    <view class='cu-tabbar-height'></view>
+    <!-- 空白的tabbar栏高度结束 -->
+</scroll-view>

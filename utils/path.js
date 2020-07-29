@@ -17,6 +17,8 @@ const chatDetailPath = '/pages/message/chat/home'
 
 // 系统通知路径
 const systemPath = '/pages/message/system/home'
+    // 帖子消息路径
+const myPostMsgPath = '/pages/message/post/home'
 
 const path = {
     loginPath,
@@ -24,6 +26,7 @@ const path = {
     registerPath,
     forumDetlPath,
     chatDetailPath,
-    systemPath
+    systemPath,
+    myPostMsgPath
 }
 export default path
