@@ -44,6 +44,31 @@ Component({
             // 在组件实例被从页面节点树移除时执行
         }
     },
+    /**
+     * 组件所在页面的生命周期
+     */
+    pageLifetimes: {
+        show: function() {
+            // 页面被展示
+            let that = this
+                // 判断登录态
+            let uid = app.globalData.uid
+            let token = app.globalData.token
+            if (uid == '' || token == '') {
+                // 本地没有登录信息
+                console.log('请登录')
+            } else {
+                // 本地存在登录信息
+                // 设置用户id
+                // that.setData({
+                //         uid: uid
+                //     })
+                // 获取dz的用户信息
+                app.wxApi.showLoading()
+                that.requestMore(false)
+            }
+        },
+    },
 
     /**
      * 组件的初始数据
@@ -149,15 +174,17 @@ Component({
                             triggered: false
                         })
                     }
-                    // if (Math.ceil(res.Variables.count / res.Variables.perpage) >= that.data.page) {
-                    let list = that.data.list.concat(res.Variables.list)
+
+                    let list = res.Variables.list
+                    if (that.data.page > 1) {
+                        list = that.data.list.concat(list)
+                    }
                     that.setData({
-                            list: list,
-                            count: res.Variables.count,
-                            notice: res.Variables.notice,
-                            isMore: false
-                        })
-                        // } 
+                        list: list,
+                        count: res.Variables.count,
+                        notice: res.Variables.notice,
+                        isMore: false
+                    })
                 })
                 .catch(e => {
                     app.wxApi.hideLoading();
