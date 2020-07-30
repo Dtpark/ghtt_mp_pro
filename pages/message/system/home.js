@@ -18,7 +18,11 @@ Page({
         count: 0,
         // 是否有更多
         isMore: false,
-        userAvatar: userAvatar
+        userAvatar: userAvatar,
+        // 富文本样式
+        tagStyle: {
+            blockquote: "background-color:var(--greyLight)"
+        }
     },
 
     /**

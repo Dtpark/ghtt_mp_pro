@@ -1,4 +1,4 @@
-<view class="cu-card dynamic no-card margin-bottom">
+<view class="cu-card dynamic no-card margin-bottom" bindtap="InputBlur">
     <!-- 主题开始 -->
     <view class="cu-item shadow">
         <!-- 作者信息开始 -->
@@ -24,11 +24,7 @@
         <view class="text-content">
             <!-- <rich-text class="" nodes="{{datalist[0].message}}"></rich-text> -->
             <!-- <wxParse nodes="{{datalist[0].message}}" /> -->
-            <parser html="{{datalist[0].message}}" />
-
-            <!-- 版区开始 -->
-            <text class="cu-tag line-gray">{{thread.forumnames}}</text>
-            <!-- 版区结束 -->
+            <parser html="{{datalist[0].message}}" selectable="true" tag-style="{{tagStyle}}" />
         </view>
         <!-- 内容结束 -->
 
@@ -36,7 +32,7 @@
         <view wx:if="{{datalist[0].attachments}}">
             <!-- 图片附件开始 -->
             <view wx:if="{{datalist[0].imageA.length > 0}}" class="grid flex-sub padding-lr {{(datalist[0].imageA.length > 1)?'col-3 grid-square':'col-1'}}">
-                <view wx:for="{{datalist[0].imageA}}" wx:for-index="aidx" wx:for-item="image" wx:key="aid" class="bg-img {{(datalist[0].imageA.length > 1)?'':'only-img'}}" style="background-image:url({{image.newUrl}});">
+                <view wx:for="{{datalist[0].imageA}}" wx:for-index="aidx" wx:for-item="image" wx:key="aid" class="bg-img {{(datalist[0].imageA.length > 1)?'':'only-img'}}" style="background-image:url({{image.newUrl}});" id="{{aidx}}" data-cellindex="0" catchtap="lookImage">
                 </view>
             </view>
             <!-- 图片附件结束 -->
@@ -45,6 +41,11 @@
 
         <!-- 点赞开始 -->
         <!-- 点赞结束 -->
+        <!-- 版区开始 -->
+        <view class="padding-left padding-top">
+            <text class="cu-tag line-gray">{{thread.forumnames}}</text>
+        </view>
+        <!-- 版区结束 -->
         <!-- 底部开始 -->
         <view class="text-gray text-df flex padding">
             <view class="flex-sub text-left"><text></text>阅读 {{thread.views}}</view>
@@ -91,14 +92,15 @@
         <view class="text-content">
             <!-- <rich-text class='message' nodes="{{item.message}}"></rich-text> -->
             <!-- <wxParse nodes="{{item.message}}" /> -->
-            <parser html="{{item.message}}" />
+            <parser html="{{item.message}}" selectable="true" tag-style="{{tagStyle}}" />
         </view>
         <!-- 评论内容结束 -->
         <!-- 附件开始 -->
         <view wx:if="{{datalist[index].attachments}}">
             <!-- 图片附件开始 -->
             <view wx:if="{{datalist[index].imageA.length > 0}}" class="grid flex-sub padding-lr {{(datalist[index].imageA.length > 1)?'col-3 grid-square':'col-1'}}">
-                <view wx:for="{{datalist[index].imageA}}" wx:for-index="aidx" wx:for-item="image" wx:key="aid" class="bg-img {{(datalist[index].imageA.length > 1)?'':'only-img'}}" style="background-image:url({{image.newUrl}});">
+                <view wx:for="{{datalist[index].imageA}}" wx:for-index="aidx" wx:for-item="image" wx:key="aid" class="bg-img {{(datalist[index].imageA.length > 1)?'':'only-img'}}" style="background-image:url({{image.newUrl}});" id="{{aidx}}" data-cellindex="{{index}}"
+                    catchtap="lookImage">
                 </view>
             </view>
             <!-- 图片附件结束 -->
@@ -108,18 +110,23 @@
         <!-- 底部开始 -->
         <view class="text-gray text-df text-right padding">
             <text class="margin-lr-xs cuIcon-appreciatefill" catchtap="sendFlower" id="{{index}}" decode="true">&nbsp;{{item.postreview.support?item.postreview.support:0}}</text>
-            <text class="cuIcon-messagefill margin-lr-xs"></text>回复
+            <text class="cuIcon-messagefill margin-lr-xs" decode="true" data-pid="{{item.pid}}" catchtap="reply">&nbsp;回复</text>
         </view>
         <!-- 底部结束 -->
     </view>
     <!-- 回复列表结束 -->
     <!-- 回复结束 -->
 </view>
+<!-- 显示更多/已经到底 开始 -->
+<view wx:if="{{hasMore}}" class="text-center text-gray margin-tb-sm">显示更多……</view>
+<view wx:else class="text-center text-gray margin-tb-sm">-没有更多了-</view>
+<!-- 显示更多/已经到底 结束 -->
 <!-- 空白的tabbar栏高度开始 -->
 <view class='cu-tabbar-height'></view>
 <!-- 空白的tabbar栏高度结束 -->
-<view class="cu-bar input shadow foot padding-tb-sm">
-    <input bindtap="showComment" class="solid-bottom" placeholder="写评论……" focus="{{false}}" maxlength="300" cursor-spacing="10" disabled></input>
+<!-- 底部工具栏开始 -->
+<view class="cu-bar input shadow foot padding-tb-sm" hidden="{{isCommend}}">
+    <input bindtap="commend" class="solid" placeholder=" 写评论……" focus="{{false}}" maxlength="300" cursor-spacing="10" disabled></input>
     <!-- <button class="solid-bottom" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</button> -->
     <!-- <view class="solid-bottom action" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</view> -->
     <view class="action">
@@ -128,6 +135,20 @@
     </view>
     <!-- <button class="cu-btn bg-green shadow-blur">发送</button> -->
 </view>
+<!-- 底部工具栏结束 -->
+
+<!-- 评论工具栏开始 -->
+<form catchsubmit="formSubmit" hidden="{{!isCommend}}">
+    <view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom: {{InputBottom}}px">
+        <view class="action">
+            <text class="cuIcon-emoji text-grey" bindtap="showEmoji"></text>
+        </view>
+        <textarea class="solid-bottom" placeholder="评论……" bindfocus="InputFocus" adjust-position="{{false}}" focus="{{isCommend}}" style="width: 70%; max-height: 200rpx; font-size: 40rpx;" auto-height="true" name="message" value="{{messageValue}}"></textarea>
+        <button class="cu-btn bg-blue shadow" formType="submit">发送</button>
+    </view>
+</form>
+<!-- 评论工具栏结束 -->
+
 
 <!-- 底部模态框（分享）开始 -->
 <view class="cu-modal bottom-modal {{isShare?'show':''}}" bindtap="hideModal">

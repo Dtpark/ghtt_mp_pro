@@ -4,18 +4,18 @@
 
 // const host = 'bbs.comsenz-service.com'
 // discuz论坛域名
-// const dzHost = 'dz.wangxiaopeng.net'
-const dzHost = 'bbs.ghtt.net'
+const dzHost = 'dz.wangxiaopeng.net'
+    // const dzHost = 'bbs.ghtt.net'
     // const host = 'dz.com'
     // http前缀
 const httpPre = 'https://'
     // const httpPre = 'http://'
     // UCenter 域名
-    // const uc = 'uc.wangxiaopeng.net'
-const uc = 'uc.ghtt.net'
+const uc = 'uc.wangxiaopeng.net'
+    // const uc = 'uc.ghtt.net'
     // 二开的UCenter API 域名
-    // const api = 'ut.dtpark.top'
-const api = 'uc.ghtt.ihitwh.com'
+const api = 'ut.dtpark.top'
+    // const api = 'uc.ghtt.ihitwh.com'
 
 const ucUrl = httpPre + uc
 const baseUrl = httpPre + dzHost
@@ -72,6 +72,8 @@ const config = {
     postThreadUrl: `${dzApiUrl}module=newthread&topicsubmit=yes&version=4`,
     detailUrl: `${dzApiUrl}module=viewthread&version=5`,
     postReplyUrl: `${dzApiUrl}module=sendreply&replysubmit=yes&version=4`,
+    // 获取引用内容
+    replyQuoteUrl: `${dzApiUrl}module=sendreply&version=3`,
     replyWorkUrl: `${dzApiUrl}module=sendreply&comment=yes&commentsubmit=yes&version=4`,
     uploadFileUrl: `${dzApiUrl}module=forumupload&simple=1&version=4`,
     // 收藏

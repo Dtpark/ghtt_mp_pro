@@ -3,8 +3,7 @@
 
 /* 引用开始 */
 
-._blockquote,
-.quote {
+._blockquote {
     background-color: var(--greyLight)!important;
     /* background-color: #000!important; */
 }

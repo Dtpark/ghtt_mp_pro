@@ -2,11 +2,16 @@
 const app = getApp()
 const detailUrl = require('../../../../config/config').detailUrl
 const userAvatar = require('../../../../config/config').userAvatar
-const baseUrl = require('../../../../config/config').baseUrl
+    // const baseUrl = require('../../../../config/config').baseUrl
 const collectUrl = require('../../../../config/config').collectUrl
 const unCollectUrl = require('../../../../config/config').unCollectUrl
 const sendFlowerUrl = require('../../../../config/config').sendFlowerUrl
-const detailPath = require('../../../../utils/path').default.detailPath
+    // const detailPath = require('../../../../utils/path').default.detailPath
+const loginmanager = require('../../../../utils/loginManager')
+const loginPath = require('../../../../utils/path').default.loginPath
+const datacheck = require('../../../../utils/dataCheck')
+const postReplyUrl = require('../../../../config/config').postReplyUrl
+const replyQuoteUrl = require('../../../../config/config').replyQuoteUrl
 Page({
 
     /**
@@ -51,7 +56,30 @@ Page({
         index: 0,
 
         // 显示/隐藏 分享框
-        isShare: false
+        isShare: false,
+
+        // 富文本样式
+        tagStyle: {
+            blockquote: "background-color:var(--greyLight)"
+        },
+
+        // 评论工具栏距底部位置
+        InputBottom: 0,
+
+        // 是否在评论
+        isCommend: false,
+
+        // 评论上传的图片列表
+        imageList: [],
+        // 评论上传的post参数
+        postDic: [],
+
+        // 评论内容
+        messageValue: '',
+        // 楼层回复的id
+        reppid: '',
+        // 待引用内容
+        noticetrimstr: '',
 
     },
 
@@ -66,7 +94,8 @@ Page({
         // 获取主题标题
         let title = options.title;
         app.wxApi.setNavigationBarTitle({ title: title })
-            // let tid = 9;
+            // tid = 2067399
+            // tid = 9
 
         // 获取用户id
         let uid = app.globalData.uid
@@ -540,7 +569,234 @@ Page({
     // inajax: 1
     // ajaxtarget: _menu_content
 
-    // 显示模态框
+    // 查看图片
+    lookImage(e) {
+        let that = this
+        let cellItem = that.data.datalist[e.currentTarget.dataset.cellindex]
+        let imageA = cellItem.imageA
+        let imageSrcArray = [];
+        for (let i = 0; i < imageA.length; i++) {
+            let item = imageA[i]
+            imageSrcArray.push(item.attachmenturl)
+        }
+        app.wxApi.previewImage({
+            current: imageSrcArray[e.currentTarget.id],
+            urls: imageSrcArray
+        })
+    },
+
+    // 点击写评论
+    commend() {
+        let that = this
+            // 判断登录态
+        if (loginmanager.isLogin()) {
+            that.setData({
+                isCommend: true
+            })
+        } else {
+            app.wxApi.navigateTo(loginPath)
+        }
+
+    },
+
+    InputFocus(e) {
+        this.setData({
+            InputBottom: e.detail.height
+        })
+    },
+    InputBlur(e) {
+        this.setData({
+            InputBottom: 0,
+            isCommend: false
+        })
+    },
+    // 显示表情
+    showEmoji() {
+        let that = this
+        app.wxApi.showToast({ title: '尚未开发，敬请期待', icon: 'none' })
+            .then(res => {
+                that.InputBlur()
+            })
+    },
+
+    // 楼层回复预处理
+    reply(e) {
+        let that = this
+
+        // 判断登录态
+        if (loginmanager.isLogin() == false) {
+            app.wxApi.navigateTo(loginPath)
+            return false
+        }
+
+        // 获取引用内容
+        let repquote = e.currentTarget.dataset.pid
+        let url = replyQuoteUrl + '&repquote=' + repquote + '&tid=' + that.data.tid
+        let data = {
+            formhash: app.globalData.formhash
+        }
+        app.apimanager.getRequest(url, data)
+            .then(res => {
+                // console.log(res)
+                if (!res.Message) {
+                    // 获取成功
+                    that.setData({
+                        noticetrimstr: res.Variables.noticetrimstr,
+                        reppid: repquote,
+                        isCommend: true
+                    })
+                } else {
+                    // 获取失败
+                    app.wxApi.showToast({ title: res.Message.messagestr, icon: 'none' })
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            })
+
+    },
+
+    // 预处理评论
+    formSubmit(e) {
+        let that = this
+
+        // 过滤emoji
+        if (datacheck.isEmojiCharacter(e.detail.value.message) || datacheck.isEmojiCharacter(e.detail.value.subject)) {
+            app.wxApi.showToast({
+                title: '不能使用emoji表情',
+                icon: 'none'
+            })
+            that.setData({
+                isCommend: false,
+                reppid: '',
+                noticetrimstr: ''
+            })
+            return;
+        }
+
+        // 构建post参数
+        let postDic = {
+            formhash: app.globalData.formhash,
+        }
+
+        let message = e.detail.value.message
+
+        if (message.length == 0) {
+            app.wxApi.showToast({ title: '评论内容不能为空', icon: 'none' })
+            that.setData({
+                isCommend: false,
+                reppid: '',
+                noticetrimstr: ''
+            })
+            return false
+        }
+
+        postDic['message'] = message
+
+        // 判断是否为引用（楼层回复）
+        if (that.data.reppid) {
+            postDic['reppid'] = that.data.reppid
+            postDic['noticetrimstr'] = that.data.noticetrimstr
+        }
+
+        // 图片附件
+        if (that.data.imageList.length > 0) {
+            for (let i = 0; i < that.data.imageList.length; i++) {
+                let imgObj = that.data.imageList[i];
+                let aid = imgObj['aid']
+                let attachKey = "attachnew[" + aid + "][description]"
+                postDic[attachKey] = ''
+            }
+        }
+        // if (that.data.audio) {
+        //     let attachKey = "attachnew[" + self.data.audio.aid + "][description]"
+        //     postDic[attachKey] = self.data.recordTime
+        // }
+
+        // if (that.data.video) {
+        //     let attachKey = "attachnew[" + self.data.video.aid + "][description]"
+        //     postDic[attachKey] = ''
+        // }
+
+        // if (that.data.classTypeList && that.data.classTypeList.length > 0 && !that.data.isreply && !that.data.isevaluate) {
+        //     if (e.detail.value.classType.length <= 0) {
+        //         e.detail.value.classType = 0
+        //     }
+        //     let typeIndex = parseInt(e.detail.value.classType)
+        //     let classObj = that.data.classTypeList[typeIndex]
+        //     postDic['typeid'] = classObj.typeid
+        // }
+
+        that.setData({
+            postDic: postDic
+        })
+
+        // 处理验证码
+        // if (that.secode().haveCode()) {
+        //     that.setData({
+        //         codeShow: true
+        //     })
+        //     that.setData({
+        //         fullScreen: true
+        //     })
+        //     return
+        // }
+        that.postThread()
+    },
+
+    // 发送评论
+    postThread() {
+        let that = this
+            // that.setData({
+            //     postLock: true
+            // })
+
+        let url = postReplyUrl + '&fid=' + that.data.fid + '&tid=' + that.data.tid
+
+        app.wxApi.showLoading({
+            title: '评论中...',
+            icon: 'loading'
+        })
+        let postDic = that.data.postDic
+        app.apimanager.postRequest(url, postDic).then(res => {
+            app.wxApi.hideLoading()
+            if (res.Message.messageval.indexOf('succeed') != -1 || res.Message.messageval.indexOf('success') != -1) {
+                // 评论成功
+                that.refreshRequest()
+                that.setData({
+                    messageValue: '',
+                    isCommend: false,
+                    reppid: '',
+                    noticetrimstr: ''
+                })
+
+            } else {
+                that.setData({
+                    isCommend: false,
+                    reppid: '',
+                    noticetrimstr: ''
+                })
+            }
+            app.wxApi.showToast({
+                title: res.Message.messagestr,
+                icon: 'none'
+            })
+        }).catch(res => {
+            console.log(res)
+            app.wxApi.hideLoading()
+            that.setData({
+                isCommend: false,
+                reppid: '',
+                noticetrimstr: ''
+            })
+            app.wxApi.showToast({
+                title: '服务器繁忙，请稍后再试！',
+                icon: 'none'
+            })
+        })
+    },
+
+    // 显示分享模态框
     showModal() {
         let that = this
         that.setData({
@@ -553,7 +809,7 @@ Page({
 
     },
 
-    // 隐藏模态框
+    // 隐藏分享模态框
     hideModal() {
         let that = this
         that.setData({

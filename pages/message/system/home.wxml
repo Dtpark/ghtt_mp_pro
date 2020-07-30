@@ -13,7 +13,7 @@
             </view>
         </view>
         <view class="text-content">
-            <parser html="{{item.note}}"></parser>
+            <parser html="{{item.note}}" tag-style="{{tagStyle}}"></parser>
         </view>
     </view>
 </view>

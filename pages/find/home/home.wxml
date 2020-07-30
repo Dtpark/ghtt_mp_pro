@@ -1,6 +1,6 @@
 <search bgColor="bg-white" msg="搜索"></search>
 
-<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" lower-threshold="-50" bindscroll="bindScroll" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refresh"
+<scroll-view class="scrollPage" scroll-y scroll-top="{{topNum}}" scroll-with-animation="true" enable-back-to-top="true" lower-threshold="150" bindscroll="bindScroll" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refresh"
     refresher-triggered="{{triggered}}" style="height: {{screenHeight - customBar}}px;">
 
     <!-- 功能区开始 -->
@@ -61,11 +61,11 @@
             </view>
             <view class="text-content">
                 <!-- 主题类别开始 -->
-                <text class="cu-tag bg-blue" wx:if="{{cellItem.special==1}}">投票</text>
-                <text class="cu-tag bg-orange" wx:if="{{cellItem.special==2}}">商品</text>
-                <text class="cu-tag bg-yellow" wx:if="{{cellItem.special==3}}">悬赏</text>
-                <text class="cu-tag bg-red" wx:if="{{cellItem.special==4}}">活动</text>
-                <text class="cu-tag bg-cyan" wx:if="{{cellItem.special==5}}">辩论</text>
+                <text class="cu-tag bg-blue" wx:if="{{cellItem.special==1}}" decode="true">投票&nbsp;</text>
+                <text class="cu-tag bg-orange" wx:if="{{cellItem.special==2}}" decode="true">商品&nbsp;</text>
+                <text class="cu-tag bg-yellow" wx:if="{{cellItem.special==3}}" decode="true">悬赏&nbsp;</text>
+                <text class="cu-tag bg-red" wx:if="{{cellItem.special==4}}" decode="true">活动&nbsp;</text>
+                <text class="cu-tag bg-cyan" wx:if="{{cellItem.special==5}}" decode="true">辩论&nbsp;</text>
                 <!-- 主题类别结束 -->
                 <text selectab="true">{{cellItem.subject}}</text>
                 <!-- <text class="text-cut text-gray text-df">{{cellItem.message}}</text> -->

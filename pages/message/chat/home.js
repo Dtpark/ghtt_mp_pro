@@ -1,6 +1,7 @@
 // pages/message/chat/home.js
 const app = getApp()
 const pmDetailUrl = require('../../../config/config').pmDetailUrl
+const datacheck = require('../../../utils/dataCheck')
 const sendPmUrl = require('../../../config/config').sendPmUrl
 Page({
 
@@ -165,6 +166,14 @@ Page({
         let message = e.detail.value.message
         if (message == '') {
             app.wxApi.showToast({ title: '发送内容不能未空', icon: 'none' })
+            return false
+        }
+        // 过滤emoji
+        if (datacheck.isEmojiCharacter(e.detail.value.message) || datacheck.isEmojiCharacter(e.detail.value.subject)) {
+            app.wxApi.showToast({
+                title: '不能使用emoji表情',
+                icon: 'none'
+            })
             return false
         }
 

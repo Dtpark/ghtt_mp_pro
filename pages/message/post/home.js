@@ -33,7 +33,12 @@ Page({
         // 总条数
         count: 0,
         // 是否有更多
-        isMore: false
+        isMore: false,
+
+        // 富文本样式
+        tagStyle: {
+            blockquote: "background-color:var(--greyLight)"
+        }
 
     },
 

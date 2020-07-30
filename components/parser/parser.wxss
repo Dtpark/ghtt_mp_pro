@@ -1,19 +1,18 @@
 :host {
-  display: block;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
+    display: block;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 .top {
-  display: inherit;
+    display: inherit;
 }
 
 @keyframes show {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
