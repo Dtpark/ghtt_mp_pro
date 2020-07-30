@@ -31,7 +31,9 @@ Page({
         // 每页几条
         perpage: 30,
         // 总条数
-        count: 0
+        count: 0,
+        // 是否有更多
+        isMore: false
 
     },
 
@@ -87,7 +89,18 @@ Page({
     onReachBottom: function() {
         let that = this
         if (Math.ceil(that.data.count / that.data.perpage) >= that.data.page + 1) {
+            if (that.data.isMore == false) {
+                that.setData({
+                    isMore: true
+                })
+            }
             that.requestMore(true)
+        } else {
+            if (that.data.isMore == true) {
+                that.setData({
+                    isMore: false
+                })
+            }
         }
 
     },

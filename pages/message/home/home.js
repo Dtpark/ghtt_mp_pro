@@ -50,23 +50,23 @@ Component({
     pageLifetimes: {
         show: function() {
             // 页面被展示
-            let that = this
-                // 判断登录态
-            let uid = app.globalData.uid
-            let token = app.globalData.token
-            if (uid == '' || token == '') {
-                // 本地没有登录信息
-                console.log('请登录')
-            } else {
-                // 本地存在登录信息
-                // 设置用户id
-                // that.setData({
-                //         uid: uid
-                //     })
-                // 获取dz的用户信息
-                app.wxApi.showLoading()
-                that.requestMore(false)
-            }
+            // let that = this
+            //     // 判断登录态
+            // let uid = app.globalData.uid
+            // let token = app.globalData.token
+            // if (uid == '' || token == '') {
+            //     // 本地没有登录信息
+            //     console.log('请登录')
+            // } else {
+            //     // 本地存在登录信息
+            //     // 设置用户id
+            //     // that.setData({
+            //     //         uid: uid
+            //     //     })
+            //     // 获取dz的用户信息
+            //     app.wxApi.showLoading()
+            //     that.requestMore(false)
+            // }
         },
     },
 
@@ -199,18 +199,41 @@ Component({
 
         // 进入系统通知详情
         toSystem() {
+            let that = this
+            if (that.data.notice.newprompt != 0) {
+                that.setData({
+                    [notice.newprompt]: 0
+                })
+            }
             app.wxApi.navigateTo(systemPath)
         },
 
         // 进入帖子通知详情
         toMyPost() {
+            let that = this
+            if (that.data.notice.newmypost != 0) {
+                that.setData({
+                    [notice.newmypost]: 0
+                })
+            }
             app.wxApi.navigateTo(myPostPath)
         },
 
         // 进入对话框详情
         toDetail(e) {
+            let that = this
             let touid = e.currentTarget.dataset.touid
             let username = e.currentTarget.dataset.username
+                // 去掉已读提醒
+            let index = e.currentTarget.id
+            let isNew = that.data.list[index]['isnew']
+            if (isNew != 0) {
+                that.setData({
+                    [`list[${index}].isnew`]: 0
+
+                })
+            }
+
             let url = chatDetailPath + '?touid=' + touid + '&username=' + username
             app.wxApi.navigateTo(url)
 

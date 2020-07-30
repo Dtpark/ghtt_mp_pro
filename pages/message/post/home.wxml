@@ -31,3 +31,7 @@
         </view>
     </view>
 </view>
+<!-- 显示更多/已经到底 开始 -->
+<view wx:if="{{isMore}}" class="text-center text-gray margin-tb-sm">显示更多……</view>
+<view wx:else class="text-center text-gray margin-tb-sm">-没有更多了-</view>
+<!-- 显示更多/已经到底 结束 -->

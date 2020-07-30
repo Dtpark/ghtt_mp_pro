@@ -36,8 +36,8 @@
 
     <!-- 私信开始 -->
     <view class="cu-list menu-avatar">
-        <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="item" wx:key="list">
-            <view class="cu-item" bindtap="toDetail" data-touid="{{ item.touid }}" data-username="{{item.tousername}}">
+        <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="item" wx:key="index">
+            <view class="cu-item" bindtap="toDetail" id="{{index}}" data-touid="{{ item.touid }}" data-username="{{item.tousername}}">
                 <view class="cu-avatar radius lg" style="background-image:url({{item.toavatar}});"></view>
                 <view class="content">
                     <view class="text-grey">{{ item.tousername }}</view>

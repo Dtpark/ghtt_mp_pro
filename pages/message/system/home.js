@@ -12,6 +12,12 @@ Page({
         list: [],
         // 当前页
         page: 1,
+        // 每页条数
+        perpage: 30,
+        // 总条数
+        count: 0,
+        // 是否有更多
+        isMore: false,
         userAvatar: userAvatar
     },
 
@@ -66,7 +72,18 @@ Page({
      */
     onReachBottom: function() {
         let that = this
-        that.requestMore(true)
+        if (Math.ceil(that.data.count / that.data.perpage) >= that.data.page + 1) {
+            if (that.data.isMore == false) {
+                that.setData({
+                    isMore: true
+                })
+            }
+            that.requestMore(true)
+        } else {
+            that.setData({
+                isMore: false
+            })
+        }
     },
 
     // 请求更多
@@ -87,14 +104,23 @@ Page({
     // 获取系统消息列表
     getList() {
         let that = this
-        app.apimanager.postRequest(systemUrl)
+        let data = {
+            page: that.data.page
+        }
+        app.apimanager.postRequest(systemUrl, data)
             .then(res => {
                 app.wxApi.hideLoading()
                 app.wxApi.stopPullDownRefresh()
                     // console.log(res)
                 if (!res.Message) {
+                    let list = res.Variables.list
+                    if (that.data.page > 1) {
+                        list = that.data.list.concat(list)
+                    }
                     that.setData({
-                        list: res.Variables.list
+                        list: list,
+                        perpage: res.Variables.perpage,
+                        count: res.Variables.count
                     })
                 } else {
                     app.wxApi.navigateBack()
