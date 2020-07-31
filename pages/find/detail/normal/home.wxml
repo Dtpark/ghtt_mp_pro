@@ -110,7 +110,7 @@
         <!-- 底部开始 -->
         <view class="text-gray text-df text-right padding">
             <text class="margin-lr-xs cuIcon-appreciatefill" catchtap="sendFlower" id="{{index}}" decode="true">&nbsp;{{item.postreview.support?item.postreview.support:0}}</text>
-            <text class="cuIcon-messagefill margin-lr-xs" decode="true" data-pid="{{item.pid}}" catchtap="reply">&nbsp;回复</text>
+            <text class="cuIcon-messagefill margin-lr-xs" decode="true" id="{{index}}" data-pid="{{item.pid}}" catchtap="reply">&nbsp;回复</text>
         </view>
         <!-- 底部结束 -->
     </view>
@@ -124,30 +124,54 @@
 <!-- 空白的tabbar栏高度开始 -->
 <view class='cu-tabbar-height'></view>
 <!-- 空白的tabbar栏高度结束 -->
-<!-- 底部工具栏开始 -->
-<view class="cu-bar input shadow foot padding-tb-sm" hidden="{{isCommend}}">
-    <input bindtap="commend" class="solid" placeholder=" 写评论……" focus="{{false}}" maxlength="300" cursor-spacing="10" disabled></input>
-    <!-- <button class="solid-bottom" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</button> -->
-    <!-- <view class="solid-bottom action" focus="{{false}}" maxlength="300" cursor-spacing="10">写评论……</view> -->
-    <view class="action">
-        <text class=" text-grey {{thread.recommend == 1?'cuIcon-appreciatefill':'cuIcon-appreciate'}}" catchtap='sendFlower' id="0"> {{thread.recommend_add < 99 ? thread.recommend_add : '99+'}}</text>
-        <text class="cuIcon-forward text-grey" catchtap="showModal"></text>
-    </view>
-    <!-- <button class="cu-btn bg-green shadow-blur">发送</button> -->
-</view>
-<!-- 底部工具栏结束 -->
+
 
 <!-- 评论工具栏开始 -->
-<form catchsubmit="formSubmit" hidden="{{!isCommend}}">
+<form catchsubmit="formSubmit">
     <view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom: {{InputBottom}}px">
-        <view class="action">
-            <text class="cuIcon-emoji text-grey" bindtap="showEmoji"></text>
+        <view hidden="{{!isCommend}}">
+            <view class="action">
+                <text class="cuIcon-emoji text-grey" bindtap="showEmoji"></text>
+                <text class="cuIcon-add text-grey" bindtap="showEmoji"></text>
+            </view>
         </view>
-        <textarea class="solid-bottom" placeholder="评论……" bindfocus="InputFocus" adjust-position="{{false}}" focus="{{isCommend}}" style="width: 70%; max-height: 200rpx; font-size: 40rpx;" auto-height="true" name="message" value="{{messageValue}}"></textarea>
-        <button class="cu-btn bg-blue shadow" formType="submit">发送</button>
+        <textarea class="solid padding-left-sm" placeholder="{{placeholder}}" bindfocus="InputFocus" adjust-position="{{false}}" style="width: 60%; max-height: 200rpx; font-size: 35rpx;" auto-height="true" name="message" value="{{messageValue}}"></textarea>
+        <!-- bindblur="InputBlur" focus="{{isCommend}}" -->
+        <view class="text-xxl" hidden="{{isCommend}}">
+            <text class=" text-grey {{thread.recommend == 1?'cuIcon-appreciatefill':'cuIcon-appreciate'}}" catchtap='sendFlower' id="0" decode="true">{{thread.recommend_add < 99 ? thread.recommend_add : '99+'}}&nbsp;</text>
+            <text class="cuIcon-forward text-grey" catchtap="showModal"></text>
+        </view>
+        <button class="cu-btn bg-blue shadow" formType="submit" hidden="{{!isCommend}}">发送</button>
     </view>
+    <!-- 多媒体面板开始 -->
+    <view class="mediaPanel" hidden="{{!mediaShow}}">
+        <view class="cu-bar bg-white">
+            <view class="action">
+                图片上传
+            </view>
+            <view class="action">
+                {{imageList.length}}/4
+            </view>
+        </view>
+        <view class="cu-form-group">
+            <view class="grid col-4 grid-square flex-sub">
+                <view class="bg-img" wx:for="{{imageList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imageList[index]}}">
+                    <image src='{{imageList[index]}}' mode='aspectFill'></image>
+                    <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+                        <text class="cuIcon-close"></text>
+                    </view>
+                </view>
+                <view class="solids" bindtap="ChooseImage" wx:if="{{imageList.length<4}}">
+                    <text class="cuIcon-cameraadd"></text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- 多媒体面板结束 -->
 </form>
 <!-- 评论工具栏结束 -->
+
+
 
 
 <!-- 底部模态框（分享）开始 -->

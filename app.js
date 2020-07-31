@@ -28,6 +28,8 @@ App({
         let that = this
             // 获取设备信息
         let systemInfo = that.wxApi.getSystemInfoSync()
+            // 获取屏幕宽度
+        that.globalData.ScreenWidth = systemInfo.screenWidth
             // 获取屏幕高度
         that.globalData.ScreenHeight = systemInfo.screenHeight
             // 获取可用窗口高度
@@ -106,6 +108,8 @@ App({
 
 
     globalData: {
+        // 屏幕宽度
+        ScreenWidth: 0,
         // 屏幕高度
         ScreenHeight: 0,
         // 可用窗口高度

@@ -66,8 +66,14 @@ Page({
         // 评论工具栏距底部位置
         InputBottom: 0,
 
+        // 评论框默认值
+        placeholder: '写评论',
+
         // 是否在评论
         isCommend: false,
+
+        // 多媒体面板是否显示
+        mediaShow: false,
 
         // 评论上传的图片列表
         imageList: [],
@@ -95,7 +101,7 @@ Page({
         let title = options.title;
         app.wxApi.setNavigationBarTitle({ title: title })
             // tid = 2067399
-            // tid = 9
+        tid = 9
 
         // 获取用户id
         let uid = app.globalData.uid
@@ -136,7 +142,8 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function() {
-
+        let that = this
+        that.InputBlur()
     },
 
     /**
@@ -601,13 +608,15 @@ Page({
 
     InputFocus(e) {
         this.setData({
-            InputBottom: e.detail.height
+            InputBottom: e.detail.height,
+            isCommend: true
         })
     },
     InputBlur(e) {
         this.setData({
             InputBottom: 0,
-            isCommend: false
+            isCommend: false,
+            mediaShow: false
         })
     },
     // 显示表情
@@ -619,9 +628,58 @@ Page({
             })
     },
 
+    // 显示多媒体面板
+    showMedia() {
+        let that = this
+        this.setData({
+            InputBottom: app.globalData.ScreenWidth / 750 * 279.5,
+            isCommend: true,
+            mediaShow: true
+        })
+    },
+
+    // 选择图片
+    ChooseImage() {
+        wx.chooseImage({
+            count: 4, //默认9
+            sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album'], //从相册选择
+            success: (res) => {
+                if (this.data.imageList.length != 0) {
+                    this.setData({
+                        imageList: this.data.imageList.concat(res.tempFilePaths)
+                    })
+                } else {
+                    this.setData({
+                        imageList: res.tempFilePaths
+                    })
+                }
+            }
+        });
+    },
+    // 删除图片
+    DelImg(e) {
+        let that = this
+        wx.showModal({
+            title: '召唤师',
+            content: '确定要删除这段回忆吗？',
+            cancelText: '再看看',
+            confirmText: '再见',
+            success: res => {
+                if (res.confirm) {
+                    that.data.imageList.splice(e.currentTarget.dataset.index, 1);
+                    that.setData({
+                        imageList: this.data.imageList
+                    })
+                }
+            }
+        })
+    },
+
     // 楼层回复预处理
     reply(e) {
         let that = this
+        app.wxApi.showLoading()
 
         // 判断登录态
         if (loginmanager.isLogin() == false) {
@@ -631,19 +689,23 @@ Page({
 
         // 获取引用内容
         let repquote = e.currentTarget.dataset.pid
+        let index = e.currentTarget.id
+        let repAuthor = that.data.datalist[index].author
         let url = replyQuoteUrl + '&repquote=' + repquote + '&tid=' + that.data.tid
         let data = {
             formhash: app.globalData.formhash
         }
         app.apimanager.getRequest(url, data)
             .then(res => {
-                // console.log(res)
+                app.wxApi.hideLoading()
+                    // console.log(res)
                 if (!res.Message) {
                     // 获取成功
                     that.setData({
                         noticetrimstr: res.Variables.noticetrimstr,
                         reppid: repquote,
-                        isCommend: true
+                        isCommend: true,
+                        placeholder: '[回复]' + repAuthor
                     })
                 } else {
                     // 获取失败
@@ -651,6 +713,7 @@ Page({
                 }
             })
             .catch(e => {
+                app.wxApi.hideLoading()
                 console.log(e)
             })
 
@@ -669,7 +732,8 @@ Page({
             that.setData({
                 isCommend: false,
                 reppid: '',
-                noticetrimstr: ''
+                noticetrimstr: '',
+                placeholder: '写评论……'
             })
             return;
         }
@@ -686,7 +750,8 @@ Page({
             that.setData({
                 isCommend: false,
                 reppid: '',
-                noticetrimstr: ''
+                noticetrimstr: '',
+                placeholder: '写评论……'
             })
             return false
         }

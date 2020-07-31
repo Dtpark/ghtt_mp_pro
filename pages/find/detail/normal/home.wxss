@@ -5,30 +5,6 @@
 }
 
 
-/* 引用开始 */
-
-
-/* .quote {
-    padding: 30rpx;
-    background-color: var(--greyLight);
-    border-radius: 6rpx;
-} */
-
-._blockquote .quote {
-    /* background-color: var(--greyLight)!important; */
-    background-color: #000!important;
-}
-
-
-/* 引用结束 */
-
-
-/* 底部栏开始 */
-
-
-/* 底部栏结束 */
-
-
 /* 评论开始 */
 
 .comment_hd {
@@ -41,6 +17,32 @@
 
 
 /* 评论结束 */
+
+
+/* 底部栏开始 */
+
+
+/* 
+.cu-bar.input {
+    padding-right: 0;
+} */
+
+
+/* 底部栏结束 */
+
+
+/* 多媒体面板开始 */
+
+.mediaPanel {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1024;
+    box-shadow: 0 -1rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+
+/* 多媒体面板结束 */
 
 
 /* 底部模态框开始 */

@@ -107,7 +107,10 @@ Component({
         perpage: 15,
 
         // 通知信息
-        notice: []
+        notice: {
+            newprompt: 0,
+            newmypost:0
+        }
     },
 
     /**
@@ -202,7 +205,7 @@ Component({
             let that = this
             if (that.data.notice.newprompt != 0) {
                 that.setData({
-                    [notice.newprompt]: 0
+                    [`notice.newprompt`]: 0
                 })
             }
             app.wxApi.navigateTo(systemPath)
@@ -213,7 +216,7 @@ Component({
             let that = this
             if (that.data.notice.newmypost != 0) {
                 that.setData({
-                    [notice.newmypost]: 0
+                    [`notice.newmypost`]: 0
                 })
             }
             app.wxApi.navigateTo(myPostPath)
