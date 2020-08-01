@@ -101,7 +101,7 @@ Page({
         let title = options.title;
         app.wxApi.setNavigationBarTitle({ title: title })
             // tid = 2067399
-        tid = 9
+            // tid = 9
 
         // 获取用户id
         let uid = app.globalData.uid
@@ -592,21 +592,18 @@ Page({
         })
     },
 
-    // 点击写评论
-    commend() {
-        let that = this
-            // 判断登录态
-        if (loginmanager.isLogin()) {
-            that.setData({
-                isCommend: true
-            })
-        } else {
-            app.wxApi.navigateTo(loginPath)
-        }
-
-    },
 
     InputFocus(e) {
+        let that = this
+            // 判断登录态
+            // 判断登录态
+        if (!loginmanager.isLogin()) {
+            // 未登录
+            app.wxApi.navigateTo(loginPath)
+            return false
+
+        }
+
         this.setData({
             InputBottom: e.detail.height,
             isCommend: true
@@ -684,6 +681,7 @@ Page({
         // 判断登录态
         if (loginmanager.isLogin() == false) {
             app.wxApi.navigateTo(loginPath)
+            app.wxApi.hideLoading()
             return false
         }
 
@@ -733,7 +731,8 @@ Page({
                 isCommend: false,
                 reppid: '',
                 noticetrimstr: '',
-                placeholder: '写评论……'
+                placeholder: '写评论……',
+                InputBottom: 0,
             })
             return;
         }
@@ -751,7 +750,8 @@ Page({
                 isCommend: false,
                 reppid: '',
                 noticetrimstr: '',
-                placeholder: '写评论……'
+                placeholder: '写评论……',
+                InputBottom: 0,
             })
             return false
         }
@@ -832,14 +832,17 @@ Page({
                     messageValue: '',
                     isCommend: false,
                     reppid: '',
-                    noticetrimstr: ''
+                    noticetrimstr: '',
+                    InputBottom: 0,
                 })
 
             } else {
+                // 评论失败
                 that.setData({
                     isCommend: false,
                     reppid: '',
-                    noticetrimstr: ''
+                    noticetrimstr: '',
+                    InputBottom: 0,
                 })
             }
             app.wxApi.showToast({
