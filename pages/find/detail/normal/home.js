@@ -1,8 +1,9 @@
 // pages/find/detail/normal/home.js
 const app = getApp()
+const postInfoUrl = require('../../../../config/config').postInfoUrl
 const detailUrl = require('../../../../config/config').detailUrl
 const userAvatar = require('../../../../config/config').userAvatar
-    // const baseUrl = require('../../../../config/config').baseUrl
+const baseUrl = require('../../../../config/config').baseUrl
 const collectUrl = require('../../../../config/config').collectUrl
 const unCollectUrl = require('../../../../config/config').unCollectUrl
 const sendFlowerUrl = require('../../../../config/config').sendFlowerUrl
@@ -12,13 +13,15 @@ const loginPath = require('../../../../utils/path').default.loginPath
 const datacheck = require('../../../../utils/dataCheck')
 const postReplyUrl = require('../../../../config/config').postReplyUrl
 const replyQuoteUrl = require('../../../../config/config').replyQuoteUrl
+const uploadFileUrl = require('../../../../config/config').uploadFileUrl
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+        // 版区号
+        fid: 0,
         // 主题号
         tid: 0,
         // 回帖页码
@@ -75,6 +78,16 @@ Page({
         // 多媒体面板是否显示
         mediaShow: false,
 
+        // 上传附件的hash
+        uploadhash: '',
+        // 附件分类
+        fileCatalog: {
+            image: 0,
+            audio: 1,
+            video: 2
+        },
+        // ===========>>>>>
+        classTypeList: [],
         // 评论上传的图片列表
         imageList: [],
         // 评论上传的post参数
@@ -119,9 +132,10 @@ Page({
             that.data.isShare = true
         }
 
-        app.wxApi.showLoading();
+        app.wxApi.showLoading()
         that.refreshRequest()
-            // self.setupAudioPlayer()
+
+        // self.setupAudioPlayer()
     },
 
     /**
@@ -143,7 +157,9 @@ Page({
      */
     onHide: function() {
         let that = this
-        that.InputBlur()
+        if (that.data.mediaShow == false) {
+            that.InputBlur()
+        }
     },
 
     /**
@@ -177,6 +193,7 @@ Page({
     onShareAppMessage: function() {
 
     },
+
 
     // 刷新页面
     refreshRequest() {
@@ -320,7 +337,7 @@ Page({
 
                     // 用户组无权查看
                     if (messageval == 'forum_group_noallowed') {
-                        console.log(77777);
+                        // console.log(77777);
                         app.wxApi.showModal({
                                 title: "提示",
                                 content: res.Message.messagestr,
@@ -400,8 +417,14 @@ Page({
                     let DownloadA = [];
                     for (let aidKey in attachments) {
                         let attItem = attachments[aidKey]
-                            // let newUrl = baseUrl + '/' + attItem.url + attItem.attachment
-                        let newUrl = attItem.url + attItem.attachment
+                        let newUrl = ''
+                        if (attItem.url.substring(0, 4) == 'http') {
+                            newUrl = attItem.url + attItem.attachment
+                        } else {
+                            newUrl = baseUrl + '/' + attItem.url + attItem.attachment
+                        }
+
+
                         attItem['newUrl'] = newUrl
                         if (attItem.isimage != 0) {
                             imageA.push(attItem)
@@ -576,7 +599,7 @@ Page({
     // inajax: 1
     // ajaxtarget: _menu_content
 
-    // 查看图片
+    // 查看主题和回复的图片附件
     lookImage(e) {
         let that = this
         let cellItem = that.data.datalist[e.currentTarget.dataset.cellindex]
@@ -596,7 +619,6 @@ Page({
     InputFocus(e) {
         let that = this
             // 判断登录态
-            // 判断登录态
         if (!loginmanager.isLogin()) {
             // 未登录
             app.wxApi.navigateTo(loginPath)
@@ -604,9 +626,10 @@ Page({
 
         }
 
-        this.setData({
+        that.setData({
             InputBottom: e.detail.height,
-            isCommend: true
+            isCommend: true,
+            mediaShow: false,
         })
     },
     InputBlur(e) {
@@ -616,6 +639,7 @@ Page({
             mediaShow: false
         })
     },
+
     // 显示表情
     showEmoji() {
         let that = this
@@ -633,44 +657,182 @@ Page({
             isCommend: true,
             mediaShow: true
         })
+        that.checkPost()
+    },
+
+    // 附件相关的函数？？？？
+    checkPost() {
+        let that = this
+        let url = postInfoUrl + '&submodule=checkpost&version=5'
+        app.apimanager.getRequest(url, {
+                fid: that.data.fid
+            })
+            .then(res => {
+                if (res.Variables.allowperm) {
+                    that.setData({
+                        uploadhash: res.Variables.allowperm.uploadhash
+                    })
+                }
+
+                // 应该是发帖时的代码？好像又不是
+                // let types = res.Variables.threadtypes.types
+                // let array = []
+                // for (let key in types) {
+                //     let value = types[key]
+                //     let data = {
+                //         typeid: key,
+                //         name: value
+                //     }
+                //     array.push(data)
+                // }
+                // types = array
+                // that.setData({
+                //     classTypeList: types,
+                // })
+            })
+            .catch(e => {
+                console.log(e)
+            })
     },
 
     // 选择图片
     ChooseImage() {
-        wx.chooseImage({
-            count: 4, //默认9
-            sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album'], //从相册选择
-            success: (res) => {
-                if (this.data.imageList.length != 0) {
-                    this.setData({
-                        imageList: this.data.imageList.concat(res.tempFilePaths)
-                    })
-                } else {
-                    this.setData({
-                        imageList: res.tempFilePaths
-                    })
+        let that = this
+        app.wxApi.chooseImage({
+                count: 4, //默认9
+            })
+            .then(res => {
+                for (let key in res.tempFilePaths) {
+                    let imageSrc = res.tempFilePaths[key]
+                    that.uploadFile(imageSrc, that.data.fileCatalog.image)
                 }
-            }
-        });
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    },
+
+    // 预览评论的图片附件
+    ViewImage(e) {
+        let that = this
+        const current = e.target.dataset.url
+        let imageSrcArray = [];
+        for (let i = 0; i < that.data.imageList.length; i++) {
+            let item = that.data.imageList[i]
+            imageSrcArray.push(item.src)
+        }
+        app.wxApi.previewImage({
+            current,
+            urls: imageSrcArray
+        })
     },
     // 删除图片
     DelImg(e) {
         let that = this
-        wx.showModal({
-            title: '召唤师',
-            content: '确定要删除这段回忆吗？',
-            cancelText: '再看看',
-            confirmText: '再见',
-            success: res => {
+        app.wxApi.showModal({
+                title: '提醒',
+                content: '确定要删除这张图片吗？'
+            })
+            .then(res => {
                 if (res.confirm) {
                     that.data.imageList.splice(e.currentTarget.dataset.index, 1);
                     that.setData({
                         imageList: this.data.imageList
                     })
                 }
-            }
-        })
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    },
+
+    // 上传附件
+    uploadFile(uploadSrc, type) {
+        let that = this
+        let uploadUrl = uploadFileUrl + '&fid=' + that.data.fid
+        let uploadhash = that.data.uploadhash;
+        let uid = app.globalData.uid
+        let postDic = {
+            hash: uploadhash,
+            uid: uid,
+        }
+        console.log(postDic)
+        console.log(typeof uploadSrc)
+        console.log(uploadSrc)
+        console.log(type)
+        app.wxApi.showLoading({
+                title: '上传附件',
+                icon: 'loading'
+            })
+            // console.log(postDic)
+        app.apimanager.uploadFile(uploadUrl, uploadSrc, 'Filedata', postDic)
+            .then(res => {
+                app.wxApi.hideLoading()
+                console.log(res)
+                let result = datacheck.uploadStatusCheck(res)
+                console.log(result)
+                if (result.success) {
+                    app.wxApi.showToast({
+                        title: '上传成功'
+                    })
+                    let aid = result.data
+                    if (type == that.data.fileCatalog.image) {
+                        // 图片附件
+                        let imageList =
+                            that.data.imageList
+                        let imgObj = {
+                            aid: aid,
+                            src: uploadSrc
+                        }
+                        imageList.push(imgObj)
+                        that.setData({
+                            imageList: imageList
+                        })
+                    } else if (type == fileCatalog.audio) {
+                        // 音频附件
+                        // that.setData({
+                        //     audioPrepareUrl: ''
+                        // })
+                        // let data = {
+                        //     aid: aid,
+                        //     src: uploadSrc
+                        // }
+                        // let recordTime = self.data.recordTime
+                        // that.setData({
+                        //     audio: data,
+                        //     total_process: util.formatTime(recordTime),
+                        //     slider_max: Math.floor(recordTime),
+                        //     recording: false
+                        // })
+                    } else if (type == fileCatalog.video) {
+                        // 视频附件
+                        // let data = {
+                        //     aid: aid,
+                        //     src: uploadSrc
+                        // }
+                        // that.setData({
+                        //     video: data
+                        // })
+                    }
+                } else {
+                    console.log(result)
+                    return
+                    app.wxApi.showModal({
+                        content: result.data,
+                        showCancel: false,
+                        confirmText: '确定'
+                    })
+                }
+            })
+            .catch(e => {
+                console.log(e)
+                app.wxApi.hideLoading()
+                app.wxApi.showModal({
+                    content: "上传失败",
+                    showCancel: false,
+                    confirmText: '确定'
+                })
+            })
     },
 
     // 楼层回复预处理
@@ -727,13 +889,15 @@ Page({
                 title: '不能使用emoji表情',
                 icon: 'none'
             })
-            that.setData({
-                isCommend: false,
-                reppid: '',
-                noticetrimstr: '',
-                placeholder: '写评论……',
-                InputBottom: 0,
-            })
+            if (!that.data.mediaShow) {
+                that.setData({
+                    isCommend: false,
+                    reppid: '',
+                    noticetrimstr: '',
+                    placeholder: '写评论……',
+                    InputBottom: 0,
+                })
+            }
             return;
         }
 
@@ -746,13 +910,15 @@ Page({
 
         if (message.length == 0) {
             app.wxApi.showToast({ title: '评论内容不能为空', icon: 'none' })
-            that.setData({
-                isCommend: false,
-                reppid: '',
-                noticetrimstr: '',
-                placeholder: '写评论……',
-                InputBottom: 0,
-            })
+            if (!that.data.mediaShow) {
+                that.setData({
+                    isCommend: false,
+                    reppid: '',
+                    noticetrimstr: '',
+                    placeholder: '写评论……',
+                    InputBottom: 0,
+                })
+            }
             return false
         }
 
@@ -812,10 +978,6 @@ Page({
     // 发送评论
     postThread() {
         let that = this
-            // that.setData({
-            //     postLock: true
-            // })
-
         let url = postReplyUrl + '&fid=' + that.data.fid + '&tid=' + that.data.tid
 
         app.wxApi.showLoading({
@@ -834,16 +996,20 @@ Page({
                     reppid: '',
                     noticetrimstr: '',
                     InputBottom: 0,
+                    mediaShow: false,
+                    imageList: []
                 })
 
             } else {
                 // 评论失败
-                that.setData({
-                    isCommend: false,
-                    reppid: '',
-                    noticetrimstr: '',
-                    InputBottom: 0,
-                })
+                if (!that.data.mediaShow) {
+                    that.setData({
+                        isCommend: false,
+                        // reppid: '',
+                        // noticetrimstr: '',
+                        InputBottom: 0,
+                    })
+                }
             }
             app.wxApi.showToast({
                 title: res.Message.messagestr,

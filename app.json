@@ -1,6 +1,5 @@
 {
     "pages": [
-
         "pages/index/index",
         "pages/logs/logs",
         "pages/home/home/home",
@@ -9,9 +8,11 @@
         "pages/mine/setting/home",
         "pages/mine/register/home",
         "pages/find/detail/normal/home",
+        "pages/find/secret/home",
         "pages/message/chat/home",
         "pages/message/system/home",
         "pages/message/post/home"
+
     ],
     "window": {
         "navigationBarTitleText": "WeChat",

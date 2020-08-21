@@ -110,6 +110,11 @@ class wxAPIManager {
         return this.promisify('pageScrollTo', params)
     }
 
+    // 从本地相册选择图片或使用相机拍照
+    chooseImage(params = { count: 9, sizeType: ['original', 'compressed'], sourceType: ['album', 'camera'] }) {
+        return this.promisify('chooseImage', params)
+    }
+
 
 
 }

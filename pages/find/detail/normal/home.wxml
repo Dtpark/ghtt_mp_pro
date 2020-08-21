@@ -131,8 +131,8 @@
     <view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom: {{InputBottom}}px">
         <view hidden="{{!isCommend}}">
             <view class="action">
-                <text class="cuIcon-emoji text-grey" bindtap="showEmoji"></text>
-                <text class="cuIcon-add text-grey" bindtap="showEmoji"></text>
+                <text class="cuIcon-emoji text-grey" catchtap="showEmoji"></text>
+                <text class="cuIcon-add text-grey" catchtap="showMedia"></text>
             </view>
         </view>
         <textarea class="solid padding-left-sm" placeholder="{{placeholder}}" bindfocus="InputFocus" adjust-position="{{false}}" style="width: 60%; max-height: 200rpx; font-size: 35rpx;" auto-height="true" name="message" value="{{messageValue}}"></textarea>
@@ -155,8 +155,8 @@
         </view>
         <view class="cu-form-group">
             <view class="grid col-4 grid-square flex-sub">
-                <view class="bg-img" wx:for="{{imageList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imageList[index]}}">
-                    <image src='{{imageList[index]}}' mode='aspectFill'></image>
+                <view class="bg-img" wx:for="{{imageList}}" wx:key="index" catchtap="ViewImage" data-url="{{imageList[index].url}}">
+                    <image src='{{imageList[index].src}}' mode='aspectFill'></image>
                     <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
                         <text class="cuIcon-close"></text>
                     </view>
